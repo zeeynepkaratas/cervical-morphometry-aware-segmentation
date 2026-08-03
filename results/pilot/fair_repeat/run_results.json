@@ -1,0 +1,62 @@
+[
+  {
+    "seed": 20260803,
+    "model": "baseline",
+    "run_id": "baseline_seed_20260803",
+    "completed_epochs": 20,
+    "resumed": true,
+    "initial_state_sha256": "b49a674d167e52e844b0f17f18ff56196c57a925b48c71371d3ea1bc1f218ccf",
+    "train_order_sha256": "f7305ef955494d1f93c9ffd7db23e7b1329c6894db8a045f77a2e0ad5c62b919",
+    "training_time": 924.4607961177826
+  },
+  {
+    "seed": 20260803,
+    "model": "nc_aware_lambda_0p10",
+    "run_id": "nc_aware_lambda_0p10_seed_20260803",
+    "completed_epochs": 25,
+    "resumed": true,
+    "initial_state_sha256": "b49a674d167e52e844b0f17f18ff56196c57a925b48c71371d3ea1bc1f218ccf",
+    "train_order_sha256": "f7305ef955494d1f93c9ffd7db23e7b1329c6894db8a045f77a2e0ad5c62b919",
+    "training_time": 1076.9048824310303
+  },
+  {
+    "seed": 20260804,
+    "model": "baseline",
+    "run_id": "baseline_seed_20260804",
+    "completed_epochs": 25,
+    "resumed": true,
+    "initial_state_sha256": "88a0343fbe095c6e29df787193d0b3da441ebb6c29a8ae37ac456f23774aa56a",
+    "train_order_sha256": "e4dadca366450aa754e06ae2fe4a68c77acf97428cbc7a8a74f621c96184d3dd",
+    "training_time": 1081.622793674469
+  },
+  {
+    "seed": 20260804,
+    "model": "nc_aware_lambda_0p10",
+    "run_id": "nc_aware_lambda_0p10_seed_20260804",
+    "completed_epochs": 25,
+    "resumed": true,
+    "initial_state_sha256": "88a0343fbe095c6e29df787193d0b3da441ebb6c29a8ae37ac456f23774aa56a",
+    "train_order_sha256": "e4dadca366450aa754e06ae2fe4a68c77acf97428cbc7a8a74f621c96184d3dd",
+    "training_time": 1088.2472746372223
+  },
+  {
+    "seed": 20260805,
+    "model": "baseline",
+    "run_id": "baseline_seed_20260805",
+    "completed_epochs": 25,
+    "resumed": true,
+    "initial_state_sha256": "f4a6c5df7211ba61ced0fe4d808fdc7b831fd4f56033b8c71080b8aade722512",
+    "train_order_sha256": "a07637bee4d0d42a8ed893ea35d87bafba460ff617573a8ca16ad1e09fe8300b",
+    "training_time": 11516.836898326874
+  },
+  {
+    "seed": 20260805,
+    "model": "nc_aware_lambda_0p10",
+    "run_id": "nc_aware_lambda_0p10_seed_20260805",
+    "completed_epochs": 25,
+    "resumed": true,
+    "initial_state_sha256": "f4a6c5df7211ba61ced0fe4d808fdc7b831fd4f56033b8c71080b8aade722512",
+    "train_order_sha256": "a07637bee4d0d42a8ed893ea35d87bafba460ff617573a8ca16ad1e09fe8300b",
+    "training_time": 2304.804351091385
+  }
+]
