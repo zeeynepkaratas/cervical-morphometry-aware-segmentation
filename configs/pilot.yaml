@@ -1,0 +1,36 @@
+seed: 20260803
+image_size: [128, 128]
+
+data:
+  herlev_data_dir: null
+
+splits:
+  original_split: data/splits/original_herlev_group_split.json
+  pilot_split: data/splits/pilot_train_validation_split.json
+  validation_fraction: 0.20
+
+loss:
+  lambda_nc_values: [0.0, 0.05, 0.10, 0.20]
+  eps: 0.000001
+
+training:
+  seeds_initial: [20260803]
+  seeds_followup: [20260804, 20260805]
+  epochs: 50
+  batch_size: 8
+  learning_rate: 0.001
+  base_channels: 32
+  early_stopping_patience: 10
+  device: null
+
+checkpoint:
+  primary_rule: best_composite_validation
+  compare_rules: [best_val_dice, best_composite_validation]
+  composite_nc_weight: 0.05
+
+degradations:
+  gaussian_blur: [1.0, 2.0, 3.0]
+  gaussian_noise: [10.0, 20.0, 30.0]
+
+outputs:
+  pilot_dir: results/pilot
