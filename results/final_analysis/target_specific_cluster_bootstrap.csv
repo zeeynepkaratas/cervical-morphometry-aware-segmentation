@@ -1,0 +1,2 @@
+metric,observed_mean,ci_low,ci_high,bootstrap_repeats,bootstrap_seed,cluster_unit,cluster_count,status
+circularity_minus_nc_coverage_change,-0.05687208804825215,-0.07679596536137848,-0.03611046593869265,5000,20260804,cell_id,184,ok

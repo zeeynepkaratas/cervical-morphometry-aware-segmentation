@@ -1,0 +1,3 @@
+target,clean_empirical_coverage,degraded_empirical_coverage,mean_coverage_change_vs_clean,median_coverage_change_vs_clean,min_coverage_change_vs_clean,max_coverage_change_vs_clean,conditions_drop_ge_2pp,conditions_drop_ge_5pp,conditions_drop_ge_10pp,conditions_below_nominal,total_degraded_conditions,mean_interval_width,median_interval_width,invalid_rate,failure_rate
+nc,0.8740942028985508,0.8665458937198068,-0.007548309178743985,0.0,-0.14130434782608703,0.02717391304347827,5,2,1,33,36,1.3478798514356494,1.246212486326487,0.0,0.0
+circularity,0.8631307563506424,0.7987103591236462,-0.06442039722699613,-0.008182035355948414,-0.43042350907519444,0.04371584699453557,15,11,8,31,36,0.4987732636035649,0.49854465340234405,0.008907004830917874,0.008907004830917874

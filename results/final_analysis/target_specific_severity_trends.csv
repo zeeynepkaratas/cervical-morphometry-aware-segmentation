@@ -1,0 +1,9 @@
+target,model,degradation,seeds_with_coverage_decrease,seeds_with_interval_width_increase,seeds_with_invalid_rate_increase,seeds_with_failure_rate_increase,coverage_monotonicity,interval_width_monotonicity,invalid_rate_monotonicity,failure_rate_monotonicity,coverage_drop_with_width_narrowing,coverage_drop_explained_by_invalid_or_failure
+circularity,baseline,gaussian_blur,2,3,3,3,cogunlukla_monoton,tam_monoton,cogunlukla_monoton,cogunlukla_monoton,False,False
+circularity,baseline,gaussian_noise,3,3,3,3,tam_monoton,tam_monoton,tam_monoton,tam_monoton,False,False
+circularity,nc_aware_lambda_0p10,gaussian_blur,3,3,3,3,cogunlukla_monoton,tam_monoton,cogunlukla_monoton,cogunlukla_monoton,False,False
+circularity,nc_aware_lambda_0p10,gaussian_noise,3,3,3,3,tam_monoton,tam_monoton,cogunlukla_monoton,cogunlukla_monoton,False,False
+nc,baseline,gaussian_blur,3,3,3,3,cogunlukla_monoton,tam_monoton,tam_monoton,tam_monoton,False,False
+nc,baseline,gaussian_noise,3,3,3,3,tam_monoton,tam_monoton,tam_monoton,tam_monoton,False,False
+nc,nc_aware_lambda_0p10,gaussian_blur,3,3,3,3,cogunlukla_monoton,tam_monoton,tam_monoton,tam_monoton,False,False
+nc,nc_aware_lambda_0p10,gaussian_noise,2,3,3,3,cogunlukla_monoton,tam_monoton,tam_monoton,tam_monoton,False,False

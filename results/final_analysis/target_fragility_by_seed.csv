@@ -1,0 +1,4 @@
+seed,nc_mean_coverage_change,circularity_mean_coverage_change,mean_target_gap_difference,circularity_more_fragile_conditions,nc_more_fragile_conditions,equal_conditions,blur_target_gap_difference,noise_target_gap_difference,blur_and_noise_same_direction,severity_target_gap_trend,fragility_label
+20260803,-0.0076992753623188566,-0.06297248075161656,-0.055273205389297704,5,6,1,0.016573753521365753,-0.12712016429996117,False,inconsistent|fully_monotonic,PARTIALLY_MORE_FRAGILE
+20260804,0.004981884057971009,-0.06646879789253278,-0.07145068195050379,9,3,0,-0.0006399813064104087,-0.14226138259459717,True,mostly_monotonic|fully_monotonic,PARTIALLY_MORE_FRAGILE
+20260805,-0.01992753623188411,-0.0638199130368391,-0.04389237680495498,7,5,0,0.0290894511760514,-0.11687420478596137,False,mostly_monotonic|fully_monotonic,PARTIALLY_MORE_FRAGILE
