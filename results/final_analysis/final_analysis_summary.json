@@ -6,5 +6,12 @@
   "circularity_degraded_condition_count": 12,
   "coverage_below_nominal_count": 64,
   "coverage_condition_count": 72,
-  "scope": "core-only analysis; no retraining, no new lambda"
+  "scope": "core-only analysis; no retraining, no new lambda",
+  "user_scientific_classification": "ORTA AMA SAVUNULABİLİR",
+  "mean_degraded_coverage_delta_vs_clean": -0.035984353202870065,
+  "coverage_drop_ge_5pp_rows": 13,
+  "coverage_degraded_rows": 72,
+  "nc_aware_better_mean_nc_rows": 5,
+  "nc_aware_comparison_rows": 21,
+  "selective_completion": true
 }
