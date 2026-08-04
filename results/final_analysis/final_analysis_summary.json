@@ -1,0 +1,10 @@
+{
+  "interim_decision": "SINIRLI SİNYAL",
+  "nc_degraded_positive_mean_count": 7,
+  "nc_degraded_condition_count": 12,
+  "circularity_degraded_positive_mean_count": 6,
+  "circularity_degraded_condition_count": 12,
+  "coverage_below_nominal_count": 64,
+  "coverage_condition_count": 72,
+  "scope": "core-only analysis; no retraining, no new lambda"
+}
