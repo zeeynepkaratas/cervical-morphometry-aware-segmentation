@@ -3,10 +3,14 @@
 ## Project Purpose
 This repository provides a controlled evaluation of morphometric reliability, conformal prediction coverage, and a deep circularity mechanism analysis for cervical cell segmentation. The project investigates whether adding a differentiable N/C-ratio target reduces N/C measurement error without harming segmentation performance, and provides evidence explaining why circularity predictions degrade under Gaussian noise while N/C ratio predictions remain robust.
 
-## Data and Structure
-This repository does **not** include the raw Herlev image dataset due to licensing and size constraints. 
+## Data, Privacy, and Clinical Disclaimer
+* **Herlev dataset is NOT included in this repository.**
+* The user must obtain the data from an authorized and official source.
+* **This repository contains NO patient or personal data.**
+* The repository only contains source code, configuration files, and derived anonymous statistical results.
+* **The results of this study DO NOT constitute clinical validation or approval for clinical use.** It is strictly a controlled evaluation and mechanism analysis.
 
-To run the analysis, provide the Herlev dataset locally via the `HERLEV_DATA_DIR` environment variable:
+To run the analysis, provide the dataset locally via the `HERLEV_DATA_DIR` environment variable:
 ```bash
 set HERLEV_DATA_DIR=C:\path\to\herlev\dataset
 ```
