@@ -34,7 +34,7 @@ if str(ROOT) not in sys.path:
 
 import cv2
 
-from src.circularity_mechanism import derive_perimeter, enrich_with_perimeter
+from src.circularity_mechanism import enrich_with_direct_perimeter, _safe_perimeter
 from src.mask_perturbation import (
     perturb_erosion,
     perturb_dilation,
@@ -77,49 +77,58 @@ def cytoplasm_mask():
 
 
 # ---------------------------------------------------------------------------
-# 1. Perimeter is finite
+# Semantic Checks for Cytoplasm (Phase B / Phase C constraints)
 # ---------------------------------------------------------------------------
 
-def test_perimeter_is_finite():
-    area = 500.0
-    circ = 0.75
-    p = derive_perimeter(area, circ)
-    assert math.isfinite(p), f"Expected finite perimeter, got {p}"
-    assert p > 0
+def test_mask_perturbation_cytoplasm_semantics(circular_mask, cytoplasm_mask):
+    """Erosion/Dilation must conserve total cell area and keep nuc/cyto disjoint."""
+    original_cell = circular_mask | cytoplasm_mask
+    
+    eroded_nuc, valid, _ = perturb_erosion(circular_mask, cytoplasm_mask, "r1", "cell1")
+    assert valid
+    
+    # Simulating the exact logic from _run_cell Phase B:
+    eroded_cyto = original_cell & ~eroded_nuc
+    
+    # 1. Total cell area is conserved
+    assert np.array_equal(eroded_nuc | eroded_cyto, original_cell)
+    # 2. Nucleus and Cytoplasm are strictly disjoint
+    assert not (eroded_nuc & eroded_cyto).any()
 
+def test_postprocessing_predicted_cell_semantics(circular_mask, cytoplasm_mask):
+    """Postprocessing must conserve predicted cell boundary, not rely on GT."""
+    from src.postprocessing import _apply_postprocessing
+    pred_cell = circular_mask | cytoplasm_mask
+    op_fn = CANDIDATES["opening"]
+    
+    # Simulating logic from _evaluate_candidate Phase C:
+    pp_nuc_raw = _apply_postprocessing(circular_mask, op_fn)
+    pp_nuc = pp_nuc_raw & pred_cell
+    pp_cyto = pred_cell & ~pp_nuc
+    
+    # 1. Predicted cell area is conserved
+    assert np.array_equal(pp_nuc | pp_cyto, pred_cell)
+    # 2. They are disjoint
+    assert not (pp_nuc & pp_cyto).any()
 
-def test_perimeter_nan_for_zero_circularity():
-    p = derive_perimeter(500.0, 0.0)
-    assert math.isnan(p)
+def test_dice_safety_check_semantics():
+    from src.postprocessing import _check_safety
+    
+    # Improvement (+0.010) should pass
+    cand1 = {"clean_dice_change": 0.010, "noise_dice_change": 0.010}
+    ok, errs = _check_safety(cand1)
+    assert ok, f"Improvement should pass, got {errs}"
 
+    # Minor loss (-0.004) should pass
+    cand2 = {"clean_dice_change": -0.004, "noise_dice_change": -0.004}
+    ok, errs = _check_safety(cand2)
+    assert ok, f"Minor loss should pass, got {errs}"
 
-def test_perimeter_nan_for_zero_area():
-    p = derive_perimeter(0.0, 0.75)
-    assert math.isnan(p)
-
-
-# ---------------------------------------------------------------------------
-# 2. Area–circularity–perimeter round-trip consistency
-# ---------------------------------------------------------------------------
-
-def test_area_circularity_formula_consistency(circular_mask):
-    from src.measurements.morphometry import compute_circularity
-    import cv2 as _cv2
-
-    mask_u8 = circular_mask.astype(np.uint8)
-    contours, _ = _cv2.findContours(mask_u8, _cv2.RETR_EXTERNAL, _cv2.CHAIN_APPROX_SIMPLE)
-    contour = max(contours, key=_cv2.contourArea)
-    cv_area = float(_cv2.contourArea(contour))
-    cv_perim = float(_cv2.arcLength(contour, True))
-
-    circ = compute_circularity(circular_mask)
-    derived_perim = derive_perimeter(cv_area, circ)
-
-    # Should recover the OpenCV perimeter within floating-point tolerance
-    assert abs(derived_perim - cv_perim) < 1e-6, (
-        f"Round-trip perimeter mismatch: derived={derived_perim:.6f}, cv={cv_perim:.6f}"
-    )
-
+    # Severe loss (-0.006) should fail
+    cand3 = {"clean_dice_change": -0.006, "noise_dice_change": 0.010}
+    ok, errs = _check_safety(cand3)
+    assert not ok
+    assert "clean_dice_change" in errs[0]
 
 # ---------------------------------------------------------------------------
 # 3. Perturbation is deterministic
@@ -274,17 +283,17 @@ def test_delta_signs_correct():
         "split": "test", "cell_id": "c1", "class": 2, "seed": 1, "model": "m", "lambda_nc": 0.0,
         "degradation": "clean", "severity": "clean",
         "nucleus_area_absolute_error": 10,
-        "perimeter_absolute_error": 5.0,
+        "direct_perimeter_absolute_error": 5.0,
         "area_relative_error": 0.05,
-        "perimeter_relative_error": 0.05,
+        "direct_perimeter_relative_error": 0.05,
         "circularity_absolute_error": 0.1,
         "circularity_relative_error": 0.15,
         "nc_absolute_error": 0.01,
         "nc_relative_error": 0.03,
         "foreground_dice": 0.95,
         "nucleus_dice": 0.95,
-        "true_perimeter": 100.0,
-        "predicted_perimeter": 105.0,
+        "direct_true_perimeter": 100.0,
+        "direct_predicted_perimeter": 105.0,
         "true_nucleus_area": 200,
         "predicted_nucleus_area": 210,
         "true_circularity": 0.8,

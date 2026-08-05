@@ -369,8 +369,9 @@ def _run_cell(
             rows.append(row)
             continue
 
-        # Cytoplasm mask for perturbed: original cytoplasm minus new nucleus
-        perturbed_cytoplasm = cytoplasm_gt & ~perturbed
+        # Cytoplasm mask for perturbed: original cell minus new nucleus
+        cell_mask = nucleus_gt | cytoplasm_gt
+        perturbed_cytoplasm = cell_mask & ~perturbed
 
         m = _morphometry(perturbed, perturbed_cytoplasm)
 

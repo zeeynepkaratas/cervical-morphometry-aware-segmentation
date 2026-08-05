@@ -268,16 +268,21 @@ def _evaluate_candidate(
 
         for r in rows:
             pred_nuc = r["pred_nucleus"]
+            pred_cyto = r["pred_cytoplasm"]
             gt_nuc = r["gt_nucleus"]
             gt_cyto = r["gt_cytoplasm"]
 
-            # Post-processed nucleus
-            pp_nuc = _apply_postprocessing(pred_nuc, op_fn)
+            # Fix: Post-processed nucleus constrained by predicted cell boundary
+            pred_cell = pred_nuc | pred_cyto
+            pp_nuc_raw = _apply_postprocessing(pred_nuc, op_fn)
+            pp_nuc = pp_nuc_raw & pred_cell
+            
             if not pp_nuc.any():
                 pp_invalid += 1
                 pp_nuc = pred_nuc  # fallback to raw for this cell
 
-            pp_cyto = gt_cyto & ~pp_nuc  # recompute cytoplasm
+            # Fix: Post-processed cytoplasm is the remainder of the predicted cell boundary
+            pp_cyto = pred_cell & ~pp_nuc
 
             # Raw metrics (already computed)
             raw_dice.append(r["nucleus_dice"])
@@ -324,16 +329,16 @@ def _check_safety(cand: dict) -> tuple[bool, list[str]]:
         noise_pp_invalid_rate, noise_raw_invalid_rate
     """
     failures = []
-    # Constraint 1: clean Dice loss <= 0.005
+    # Constraint 1: clean Dice loss <= 0.005 (only penalize losses)
     clean_dice_chg = cand.get("clean_dice_change", 0.0)
     if isinstance(clean_dice_chg, float) and not np.isnan(clean_dice_chg):
-        if abs(clean_dice_chg) > 0.005:
-            failures.append(f"clean_dice_change={clean_dice_chg:.4f} > 0.005")
-    # Constraint 2: noisy Dice loss <= 0.005
+        if clean_dice_chg < -0.005:
+            failures.append(f"clean_dice_change={clean_dice_chg:.4f} < -0.005")
+    # Constraint 2: noisy Dice loss <= 0.005 (only penalize losses)
     noise_dice_chg = cand.get("noise_dice_change", 0.0)
     if isinstance(noise_dice_chg, float) and not np.isnan(noise_dice_chg):
-        if abs(noise_dice_chg) > 0.005:
-            failures.append(f"noise_dice_change={noise_dice_chg:.4f} > 0.005")
+        if noise_dice_chg < -0.005:
+            failures.append(f"noise_dice_change={noise_dice_chg:.4f} < -0.005")
     # Constraint 3: N/C error worsening <= 5%
     raw_nc = cand.get("noise_raw_mean_nc_err", float("nan"))
     pp_nc = cand.get("noise_pp_mean_nc_err", float("nan"))
