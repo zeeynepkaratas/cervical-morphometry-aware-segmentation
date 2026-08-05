@@ -4,22 +4,21 @@
 This report presents the findings of the pre-registered circularity mechanism analysis. The goal was to explain why conformal prediction coverage for the circularity metric degrades significantly under Gaussian noise while the N/C ratio remains robust, and to test if a simple post-processing step could mitigate this.
 
 **Decision Conclusion:** `STRONG_MECHANISM_SUPPORTED`
-The analysis provides strong evidence that circularity degradation is driven by high-frequency boundary irregularities (perimeter expansion) which disproportionately affect circularity but leave area (and thus N/C ratio) relatively intact. However, a universal morphological post-processing fix could not be safely applied without violating Dice and N/C safety constraints.
+The analysis provides strong evidence that circularity degradation was more strongly associated with direct perimeter error than with area error, while controlled boundary perturbations affected circularity substantially more than N/C ratio. However, a universal morphological post-processing fix could not be safely applied without violating Dice and N/C safety constraints.
 
 ## H1 & H2: Area–Perimeter Divergence (Phase A)
-By calculating perimeter directly from the prediction masks (using OpenCV contours via deterministic re-inference) rather than algebraically deriving it, we decoupled the mathematical artifacts and decomposed the error under Gaussian noise:
+By calculating perimeter directly from the prediction masks (using OpenCV contours via deterministic re-inference) rather than algebraically deriving it, we decoupled the mathematical artifacts and decomposed the error under Gaussian noise.
 
-- **Perimeter vs. Area Correlation:** The increase in circularity absolute error under Gaussian noise correlates more strongly with direct perimeter error changes ($\rho = 0.586$) than with area error changes ($\rho = 0.408$).
-- This supports the hypothesis that noise heavily corrupts the perimeter (boundary), disrupting circularity predictions, while area integrals remain relatively stable.
-- (Prior derived-perimeter correlations were artificially inflated due to mathematical coupling; the direct-mask evidence provides independent confirmation).
+- **Correlation:** The increase in circularity absolute error under Gaussian noise correlates more strongly with direct perimeter error changes ($\rho \approx 0.586$) than with area error changes ($\rho \approx 0.408$).
+- **Regression:** A cell-aggregated OLS regression ($R^2 = 0.503$) indicates that while perimeter error is a strong positive predictor of circularity degradation (coefficient: `0.382`), the concurrent drop in foreground Dice score is also a major explanatory factor (coefficient: `-0.502`). Area error showed a weak negative association (coefficient: `-0.104`). Perimeter is a substantial mechanism, but not the *sole* cause of metric fragility.
 
 ## H3 & H4: Controlled Mask Perturbations (Phase B)
 We subjected ground-truth masks to controlled deterministic perturbations, grouping them by the resulting Dice loss to ensure fair comparisons. Cytoplasm masks were strictly constrained to conserve the original predicted cell boundary.
 
 At a matched **mild Dice loss band (0.95–0.98)**:
-- **Boundary perturbations** (jitter, indentations, protrusions) caused massive drops in circularity (mean change $\approx -0.36$).
-- **Shape perturbations** (erosion, dilation) caused negligible changes in circularity (mean absolute change $\approx 0.018$).
-- Conversely, boundary perturbations changed the N/C ratio only modestly (mean change $\approx -0.003$), while shape perturbations had a slightly larger effect on N/C (mean change $\approx 0.025$).
+- **Boundary perturbations** (jitter, indentations, protrusions) caused massive drops in circularity (mean signed change $\approx -0.32484$, mean absolute change $\approx 0.32486$).
+- **Shape perturbations** (erosion, dilation) caused negligible changes in circularity (mean signed change $\approx 0.01428$, mean absolute change $\approx 0.01824$).
+- Conversely, boundary perturbations changed the N/C ratio only modestly (mean signed change $\approx 0.00727$, mean absolute change $\approx 0.08137$), while shape perturbations had a noticeably larger effect on N/C (mean signed change $\approx 0.03726$, mean absolute change $\approx 0.15305$).
 
 This double dissociation supports the hypothesis regarding the discrepancy in conformal coverage: Gaussian noise induces boundary-type errors that disrupt circularity but largely preserve the N/C ratio.
 
