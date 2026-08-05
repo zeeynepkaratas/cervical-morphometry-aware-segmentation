@@ -3,12 +3,14 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.ipynb_checkpoints/
 
 .env
 .venv/
 venv/
 env/
 
+data/
 data/raw/
 *.zip
 *.7z
@@ -26,9 +28,17 @@ data/raw/
 *.xlsx
 *.pdf
 
+*.pt
+*.pth
+*.ckpt
+*.log
+
 results/**/*.pt
 results/**/*.pth
 results/**/checkpoints/
+results/**/predictions/
+results/**/masks/
+results/**/cache/
 results/**/figures/*.png
 results/**/figures/*.jpg
 results/**/figures/*.pdf
