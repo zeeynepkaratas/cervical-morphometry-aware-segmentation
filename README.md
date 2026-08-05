@@ -1,7 +1,7 @@
 # Cervical Morphometry-Aware Segmentation Analysis
 
 ## Project Purpose
-This repository provides a controlled evaluation of morphometric reliability, conformal prediction coverage, and a deep circularity mechanism analysis for cervical cell segmentation. The project investigates whether adding a differentiable N/C-ratio target reduces N/C measurement error without harming segmentation performance, and provides evidence explaining why circularity predictions degrade under Gaussian noise while N/C ratio predictions remain robust.
+This repository provides a controlled evaluation of morphometric reliability, conformal prediction coverage, and a deep circularity mechanism analysis for cervical cell segmentation. The project investigates whether adding a differentiable N/C-ratio target reduces N/C measurement error without harming segmentation performance, and provides evidence explaining why circularity predictions degrade under Gaussian noise while N/C ratio predictions remain comparatively more robust than circularity under Gaussian noise.
 
 ## Data, Privacy, and Clinical Disclaimer
 * **Herlev dataset is NOT included in this repository.**
@@ -51,9 +51,9 @@ python -m pytest tests/ -v
 ```
 
 ## Scientific Findings Summary
-The circularity mechanism analysis **provides evidence** that under Gaussian noise, high-frequency boundary irregularities cause severe degradation of the perimeter measurements. This disproportionately affects circularity error ($\rho = 0.57$) while leaving the overall area integrals (and thus the N/C ratio) relatively intact. 
+The circularity mechanism analysis yields a final decision of `STRONG_MECHANISM_SUPPORTED`. It provides evidence that under Gaussian noise, high-frequency boundary irregularities cause severe degradation of the perimeter measurements. Circularity degradation was more strongly associated with direct perimeter error ($\rho = 0.586$) than with area error, while controlled boundary perturbations affected circularity substantially more than the N/C ratio. 
 
-Controlled shape vs. boundary perturbation tests **support** the hypothesis that boundary-level noise destroys circularity while preserving area-based morphometrics. Our evaluation explored morphological post-processing to mitigate this, but found no single static operator that could safely restore circularity without causing unacceptable Dice loss or N/C degradation.
+Our evaluation explored morphological post-processing to mitigate this. Although several morphological operations improved average circularity, Dice, and/or N/C metrics, all four candidates were rejected because they increased the invalid prediction rate.
 
 ## Reproducibility
 All perturbations use deterministic, hashed seeds anchored to unique cell IDs to ensure exact reproducibility across multiple runs. Clustered bootstrapping is used for all confidence intervals to account for correlated cell observations across seeds and severities.
