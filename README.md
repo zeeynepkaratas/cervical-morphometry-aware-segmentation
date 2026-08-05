@@ -1,54 +1,55 @@
-# Cervical Morphometry-Aware Segmentation Pilot
+# Cervical Morphometry-Aware Segmentation Analysis
 
-This repo is a separate Herlev-only pilot derived from `zeeynepkaratas/cervical-morphometry-conformal`. The old project is preserved as the strict conformal analysis source; this repo tests one narrow pivot without changing that source checkout.
+## Project Purpose
+This repository provides a controlled evaluation of morphometric reliability, conformal prediction coverage, and a deep circularity mechanism analysis for cervical cell segmentation. The project investigates whether adding a differentiable N/C-ratio target reduces N/C measurement error without harming segmentation performance, and provides evidence explaining why circularity predictions degrade under Gaussian noise while N/C ratio predictions remain robust.
 
-Research question: can adding a differentiable N/C-ratio target reduce N/C measurement error without materially lowering segmentation Dice, and does the effect survive Gaussian blur and Gaussian noise?
+## Data and Structure
+This repository does **not** include the raw Herlev image dataset due to licensing and size constraints. 
 
-The official N/C definition is locked as:
-
-```text
-N/C ratio = nucleus_area / cytoplasm_only_area
-```
-
-It is not `nucleus_area / whole_cell_area`. Class indices remain `0=background`, `1=cytoplasm-only`, `2=nucleus`.
-
-## Scope
-
-The pilot uses only Herlev. Cx22 is out of scope because this is a go/no-go pilot, not external validation. Conformal prediction is also out of scope during this phase; outputs and metric names are kept compatible with a later strict conformal handoff.
-
-The only model change is the loss:
-
-```text
-total_loss = CrossEntropy + foreground Dice + lambda_nc * SmoothL1(log(pred_nc), log(true_nc))
-```
-
-Baseline uses `lambda_nc=0`, which numerically matches the source segmentation loss.
-
-## Data
-
-Raw Herlev images are not committed. Provide data with:
-
+To run the analysis, provide the Herlev dataset locally via the `HERLEV_DATA_DIR` environment variable:
 ```bash
-set HERLEV_DATA_DIR=C:\path\to\herlev
+set HERLEV_DATA_DIR=C:\path\to\herlev\dataset
 ```
 
-or pass `--data-dir`. If neither is provided, commands try the local source checkout at `../cervical-morphometry-conformal/data/raw/herlev`.
+Expected data structure:
+```text
+herlev/
+  ├── smear2005/ (or similar raw folders containing .bmp)
+  └── ...
+```
 
-## Commands
-
+## Environment Setup
+The project uses standard PyTorch and data science libraries.
 ```bash
-python -m pytest -q
-python experiments/make_pilot_split.py --config configs/pilot.yaml
-python experiments/train_pilot_models.py --config configs/pilot.yaml
-python experiments/evaluate_pilot_models.py --config configs/pilot.yaml
-python experiments/summarize_pilot.py --config configs/pilot.yaml
-python experiments/run_pilot.py --config configs/pilot.yaml
+pip install -r requirements.txt
+pip install torch torchvision
 ```
 
-Results are written under `results/pilot/`, including per-cell predictions, metric summaries, loss-scale diagnostics, training histories, `pilot_summary.json`, and `pilot_decision.md`.
+## Branch Structure
+The project maintains a safe, strict separation of concerns via branching:
+- `main`: The secure baseline containing the finalized target-specific conformal coverage and pilot results.
+- `feature/circularity-mechanism-analysis`: Contains the deep-dive mechanism analysis evaluating boundary vs. shape perturbation under noise.
 
-## Decision Rule
+## Core Commands
 
-GO requires most pre-declared checks to pass: at least roughly 10% mean N/C absolute-error reduction, foreground Dice drop no worse than 0.01, no meaningful invalid N/C increase, improvement in at least two of clean/blur/noise families, and no serious circularity harm. Otherwise the decision is `CONDITIONAL_GO` or `NO_GO`.
+### Running the Mechanism Analysis
+To reproduce the circularity mechanism analysis (Phase A-D):
+```bash
+set HERLEV_DATA_DIR=C:\path\to\herlev\dataset
+python experiments/run_circularity_mechanism.py --phase all
+```
+This generates all outputs, data leakage audits, and statistical figures under `results/circularity_mechanism/`.
 
-No success is claimed until the pilot has actually run.
+### Running Tests
+To run the automated test suite, which enforces leakage prevention, perturbation determinism, and safety constraints:
+```bash
+python -m pytest tests/ -v
+```
+
+## Scientific Findings Summary
+The circularity mechanism analysis **provides evidence** that under Gaussian noise, high-frequency boundary irregularities cause severe degradation of the perimeter measurements. This disproportionately affects circularity error ($\rho = 0.57$) while leaving the overall area integrals (and thus the N/C ratio) relatively intact. 
+
+Controlled shape vs. boundary perturbation tests **support** the hypothesis that boundary-level noise destroys circularity while preserving area-based morphometrics. Our evaluation explored morphological post-processing to mitigate this, but found no single static operator that could safely restore circularity without causing unacceptable Dice loss or N/C degradation.
+
+## Reproducibility
+All perturbations use deterministic, hashed seeds anchored to unique cell IDs to ensure exact reproducibility across multiple runs. Clustered bootstrapping is used for all confidence intervals to account for correlated cell observations across seeds and severities.
