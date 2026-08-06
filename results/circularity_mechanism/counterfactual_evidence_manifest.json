@@ -22,7 +22,7 @@
     "counterfactual_interpretation.json": "0b7b8af2ff4ab4cad21eca9a76fde1aea5d32ccc9084c6e8acb43d2b1cb4efef"
   },
   "git_branch": "manuscript/v1",
-  "git_commit": "f0699c1b3494702ea2eabbb5e768a8b88e194b10",
+  "git_commit": "623562139fb828df8d403b8436c581b3d646366b",
   "python_version": "3.13.5",
   "pandas_version": "3.0.5",
   "numpy_version": "2.2.3",
