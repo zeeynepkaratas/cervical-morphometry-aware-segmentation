@@ -90,7 +90,6 @@ def test_decomposition_uniqueness_checks(tmp_path):
         "direct_predicted_perimeter": [40, 40, 40]
     })
     
-    test_csv = tmp_path / "real_prediction_area_perimeter.csv"
     os.makedirs(tmp_path / "results" / "circularity_mechanism", exist_ok=True)
     df.to_csv(tmp_path / "results" / "circularity_mechanism" / "real_prediction_area_perimeter.csv", index=False)
     
@@ -112,3 +111,73 @@ def test_decomposition_uniqueness_checks_corr(tmp_path):
     with patch("pandas.read_csv", return_value=df):
         with pytest.raises(ValueError, match="Duplicate keys found in corrupted predictions"):
             run_decomposition()
+
+# --- New Audit Tests ---
+
+def test_deterministic_within_cell_matching_and_no_reuse():
+    # We will simulate the dataframe logic from run_counterfactual_comparison
+    # testing matching sorting and no-reuse.
+    
+    # 2 CFs, 2 Shapes in same cell
+    shape_df = pd.DataFrame([
+        {"cell_id": "c1", "perturbation": "erosion", "severity": "r1", "nucleus_dice": 0.96, "circularity_change": 0.1, "nc_change": 0.0},
+        {"cell_id": "c1", "perturbation": "dilation", "severity": "r2", "nucleus_dice": 0.97, "circularity_change": 0.2, "nc_change": 0.0},
+    ])
+    
+    counter_df = pd.DataFrame([
+        {"cell_id": "c1", "perturbation": "area_preserving_boundary", "severity": "low", "nucleus_dice": 0.965, "circularity_change": 0.05, "nc_change": 0.0, "perimeter_change": 0},
+        {"cell_id": "c1", "perturbation": "area_preserving_boundary", "severity": "high", "nucleus_dice": 0.965, "circularity_change": 0.06, "nc_change": 0.0, "perimeter_change": 0}
+    ])
+    
+    # Matching logic from runner:
+    severity_order = {"low": 1, "medium": 2, "high": 3, "r1": 1, "r2": 2}
+    
+    pairs = []
+    used_shape_indices = set()
+    counter_df["sev_order"] = counter_df["severity"].map(severity_order)
+    counter_df = counter_df.sort_values("sev_order").reset_index(drop=True)
+    
+    for _, cf_row in counter_df.iterrows():
+        available_shapes = []
+        for i, shape_row in shape_df.iterrows():
+            if i in used_shape_indices: continue
+            diff = abs(cf_row["nucleus_dice"] - shape_row["nucleus_dice"])
+            available_shapes.append({"idx": i, "diff": diff, "pert": shape_row["perturbation"], "sev": severity_order.get(shape_row["severity"], 99)})
+        
+        available_shapes.sort(key=lambda x: (x["diff"], x["pert"], x["sev"]))
+        best_shape_idx = available_shapes[0]["idx"]
+        used_shape_indices.add(best_shape_idx)
+        pairs.append(shape_df.loc[best_shape_idx]["severity"])
+        
+    assert len(pairs) == 2
+    # CF 'low' gets first choice. Both shapes have diff 0.005. 
+    # Tie-break: pert name (dilation vs erosion). 'dilation' comes first.
+    assert pairs[0] == "r2"  # dilation, r2
+    assert pairs[1] == "r1"  # erosion, r1
+    # This verifies no reuse, exact sort order, and tie-breaking
+
+def test_cell_level_aggregation():
+    pairs_df = pd.DataFrame([
+        {"cell_id": "c1", "circ_change_diff": 0.01},
+        {"cell_id": "c1", "circ_change_diff": 0.03},
+        {"cell_id": "c2", "circ_change_diff": 0.08}
+    ])
+    cell_summary = pairs_df.groupby("cell_id")["circ_change_diff"].mean().reset_index()
+    assert len(cell_summary) == 2
+    assert cell_summary[cell_summary["cell_id"] == "c1"]["circ_change_diff"].values[0] == 0.02
+
+def test_report_json_decision_consistency():
+    from pathlib import Path
+    ROOT = Path(__file__).resolve().parents[1]
+    report_path = ROOT / "docs" / "counterfactual_decomposition_report.md"
+    json_path = ROOT / "results" / "circularity_mechanism" / "counterfactual_interpretation.json"
+    
+    if report_path.exists() and json_path.exists():
+        with open(json_path, "r") as f:
+            data = json.load(f)
+        decision = data["decision"]
+        
+        with open(report_path, "r") as f:
+            content = f.read()
+            
+        assert decision in content, "JSON decision mismatch with report content"

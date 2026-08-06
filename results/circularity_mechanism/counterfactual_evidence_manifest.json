@@ -4,7 +4,7 @@
   "input_rows": 5486,
   "input_cols": 27,
   "git_branch": "feature/area-preserving-counterfactual",
-  "git_commit": "13a0cd493da9f632e0a15414e15c93e92d6d8825",
+  "git_commit": "95f49965bf4f1c8e30515564142cef0b6208cb31",
   "python_version": "3.13.5",
   "pandas_version": "3.0.5",
   "numpy_version": "2.2.3",
