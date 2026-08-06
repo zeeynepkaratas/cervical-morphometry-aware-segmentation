@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np
 import json
 import sys
+import hashlib
+import platform
+import cv2
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -10,32 +13,22 @@ from src.counterfactual_decomposition import run_decomposition
 
 OUT_DIR = Path("results/circularity_mechanism")
 
-def clustered_bootstrap_ci(data, cell_ids, n_boot=10000, seed=42):
+def bootstrap_cell_means(cell_differences, n_boot=10000, seed=42):
     rng = np.random.default_rng(seed)
-    unique_cells = np.unique(cell_ids)
-    n_cells = len(unique_cells)
-    
-    boot_means = np.zeros(n_boot)
-    for i in range(n_boot):
-        # Sample cell IDs with replacement
-        boot_cells = rng.choice(unique_cells, size=n_cells, replace=True)
-        
-        # Build bootstrap sample by grabbing all instances for each sampled cell
-        # This is slow if done naively, so we use indexing
-        # Create a mapping from cell_id to indices
-        boot_indices = []
-        # Pre-compute indices per cell for faster lookup
-        # (Assuming data and cell_ids are aligned arrays)
-        pass # implemented efficiently below
-
-    # Efficient implementation:
-    cell_to_idx = {cid: np.where(cell_ids == cid)[0] for cid in unique_cells}
-    for i in range(n_boot):
-        boot_cells = rng.choice(unique_cells, size=n_cells, replace=True)
-        boot_idx = np.concatenate([cell_to_idx[cid] for cid in boot_cells])
-        boot_means[i] = np.mean(data[boot_idx])
-        
+    n_cells = len(cell_differences)
+    if n_cells == 0:
+        return 0, 0
+    # Resample the 1D array of cell differences
+    boot_samples = rng.choice(cell_differences, size=(n_boot, n_cells), replace=True)
+    boot_means = np.mean(boot_samples, axis=1)
     return np.percentile(boot_means, [2.5, 97.5])
+
+def get_file_sha256(filepath):
+    h = hashlib.sha256()
+    with open(filepath, 'rb') as f:
+        while chunk := f.read(8192):
+            h.update(chunk)
+    return h.hexdigest()
 
 def run_counterfactual_comparison():
     print("Running decomposition...")
@@ -43,16 +36,13 @@ def run_counterfactual_comparison():
     print("Decomposition completed.")
     
     print("Loading perturbation results...")
-    df = pd.read_csv(OUT_DIR / "controlled_mask_perturbations.csv")
+    input_file = OUT_DIR / "controlled_mask_perturbations.csv"
+    df = pd.read_csv(input_file)
     
-    # Eligibility filters
-    df["pixel_area_change"] = df["perturbed_area"] - df["gt_area"]
-    # Contour area relative change (gt_area is pixel area, use it for denom for consistency with pixel preservation)
-    # Actually, area_change_rel is already in the CSV and is contour area based. 
-    # Let's ensure both are met for counterfactuals.
-    
+    # Eligibility filters based on Explicit Area
+    # Requirements: pixel_count_change == 0 AND abs(contour_area_change_rel) <= 0.02
     is_cf = df["perturbation"] == "area_preserving_boundary"
-    cf_eligible = (df["valid"] == True) & (df["pixel_area_change"] == 0) & (df["area_change_rel"].abs() <= 0.02)
+    cf_eligible = (df["valid"] == True) & (df["pixel_count_change"] == 0) & (df["contour_area_change_rel"].abs() <= 0.02)
     
     df.loc[is_cf, "valid"] = cf_eligible[is_cf]
     
@@ -73,47 +63,65 @@ def run_counterfactual_comparison():
     shape_df = band_df[band_df["perturbation"].isin(["erosion", "dilation"])]
     counter_df = band_df[band_df["perturbation"] == "area_preserving_boundary"]
     
-    # Strict matching within cell
-    common_cells = set(shape_df["cell_id"]).intersection(set(counter_df["cell_id"]))
+    common_cells = sorted(list(set(shape_df["cell_id"]).intersection(set(counter_df["cell_id"]))))
+    
+    severity_order = {"low": 1, "medium": 2, "high": 3, "r1": 1, "r2": 2}
     
     pairs = []
+    unmatched_cf_count = 0
+    
     for cid in common_cells:
         cell_shapes = shape_df[shape_df["cell_id"] == cid].copy()
         cell_cfs = counter_df[counter_df["cell_id"] == cid].copy()
         
-        # Sort shape instances to allow deterministic matching
-        cell_shapes = cell_shapes.sort_values(["perturbation", "severity"]).reset_index()
+        # Sort counterfactuals by severity order
+        cell_cfs["sev_order"] = cell_cfs["severity"].map(severity_order)
+        cell_cfs = cell_cfs.sort_values("sev_order").reset_index(drop=True)
+        
         used_shape_indices = set()
         
         for _, cf_row in cell_cfs.iterrows():
             best_shape_idx = -1
-            min_dice_diff = float("inf")
             
+            # Create comparable array of available shapes
+            available_shapes = []
             for i, shape_row in cell_shapes.iterrows():
                 if i in used_shape_indices:
                     continue
                 diff = abs(cf_row["nucleus_dice"] - shape_row["nucleus_dice"])
-                if diff < min_dice_diff:
-                    min_dice_diff = diff
-                    best_shape_idx = i
-                    
-            if best_shape_idx != -1:
-                used_shape_indices.add(best_shape_idx)
-                s_row = cell_shapes.iloc[best_shape_idx]
-                pairs.append({
-                    "cell_id": cid,
-                    "cf_severity": cf_row["severity"],
-                    "shape_perturbation": s_row["perturbation"],
-                    "shape_severity": s_row["severity"],
-                    "cf_dice": cf_row["nucleus_dice"],
-                    "shape_dice": s_row["nucleus_dice"],
-                    "cf_abs_circ_change": abs(cf_row["circularity_change"]),
-                    "shape_abs_circ_change": abs(s_row["circularity_change"]),
-                    "circ_change_diff": abs(cf_row["circularity_change"]) - abs(s_row["circularity_change"]),
-                    "cf_abs_nc_change": abs(cf_row["nc_change"]),
-                    "shape_abs_nc_change": abs(s_row["nc_change"]),
-                    "cf_perimeter_change": cf_row["perimeter_change"]
+                available_shapes.append({
+                    "idx": i,
+                    "diff": diff,
+                    "pert": shape_row["perturbation"],
+                    "sev": severity_order.get(shape_row["severity"], 99)
                 })
+            
+            if not available_shapes:
+                unmatched_cf_count += 1
+                continue
+                
+            # Tie break rules: 1. min diff, 2. pert name alphabetical, 3. severity order
+            available_shapes.sort(key=lambda x: (x["diff"], x["pert"], x["sev"]))
+            
+            best_shape_idx = available_shapes[0]["idx"]
+            used_shape_indices.add(best_shape_idx)
+            
+            s_row = cell_shapes.loc[best_shape_idx]
+            pairs.append({
+                "cell_id": cid,
+                "cf_severity": cf_row["severity"],
+                "shape_perturbation": s_row["perturbation"],
+                "shape_severity": s_row["severity"],
+                "cf_dice": cf_row["nucleus_dice"],
+                "shape_dice": s_row["nucleus_dice"],
+                "absolute_dice_difference": available_shapes[0]["diff"],
+                "cf_abs_circ_change": abs(cf_row["circularity_change"]),
+                "shape_abs_circ_change": abs(s_row["circularity_change"]),
+                "circ_change_diff": abs(cf_row["circularity_change"]) - abs(s_row["circularity_change"]),
+                "cf_abs_nc_change": abs(cf_row["nc_change"]),
+                "shape_abs_nc_change": abs(s_row["nc_change"]),
+                "cf_perimeter_change": cf_row["perimeter_change"]
+            })
 
     pairs_df = pd.DataFrame(pairs)
     pairs_df.to_csv(OUT_DIR / "area_preserving_counterfactual_pairs.csv", index=False)
@@ -122,23 +130,24 @@ def run_counterfactual_comparison():
         print("No matched pairs found.")
         return
         
-    # Bootstrap
-    diff_data = pairs_df["circ_change_diff"].values
-    cell_ids = pairs_df["cell_id"].values
-    ci_lower, ci_upper = clustered_bootstrap_ci(diff_data, cell_ids)
-    
-    mean_diff = np.mean(diff_data)
-    median_diff = np.median(diff_data)
-    
-    # Cell level summary
+    # Cell level aggregation
     cell_summary = pairs_df.groupby("cell_id")["circ_change_diff"].mean().reset_index()
     cell_summary.to_csv(OUT_DIR / "area_preserving_counterfactual_cell_summary.csv", index=False)
     
-    pos_fraction = (cell_summary["circ_change_diff"] > 0).mean()
+    # Bootstrap over cell means only
+    cell_differences = cell_summary["circ_change_diff"].values
+    n_boot = 10000
+    boot_seed = 42
+    ci_lower, ci_upper = bootstrap_cell_means(cell_differences, n_boot=n_boot, seed=boot_seed)
+    
+    mean_diff = np.mean(cell_differences)
+    median_diff = np.median(cell_differences)
+    pos_fraction = (cell_differences > 0).mean()
     
     summary = {
         "n_matched_pairs": len(pairs_df),
-        "n_unique_cells": len(pairs_df["cell_id"].unique()),
+        "n_unique_cells": len(cell_differences),
+        "unmatched_cf_instances": unmatched_cf_count,
         "mean_paired_circ_diff": mean_diff,
         "median_paired_circ_diff": median_diff,
         "ci_lower_95": ci_lower,
@@ -148,7 +157,7 @@ def run_counterfactual_comparison():
     }
     pd.DataFrame([summary]).to_csv(OUT_DIR / "area_preserving_counterfactual_summary.csv", index=False)
     
-    # Pre-registered Decision Logic
+    # Pre-registered Decision Logic strictly using the newly cell-bootstrapped CI
     if ci_lower > 0 and summary["mean_cf_abs_nc_change"] < 0.02:
         decision = "STRONG_ADDITIONAL_SUPPORT"
     elif mean_diff > 0:
@@ -158,7 +167,7 @@ def run_counterfactual_comparison():
         
     interp = {
         "decision": decision,
-        "reasoning": f"Bootstrap 95% CI for paired absolute circularity change difference was [{ci_lower:.5f}, {ci_upper:.5f}] with mean {mean_diff:.5f}.",
+        "reasoning": f"Cell-level bootstrap 95% CI for paired absolute circularity change difference was [{ci_lower:.5f}, {ci_upper:.5f}] with mean {mean_diff:.5f}.",
         "metrics": summary
     }
     
@@ -167,6 +176,33 @@ def run_counterfactual_comparison():
         
     print(f"Decision: {decision}")
     print(f"95% CI: [{ci_lower:.5f}, {ci_upper:.5f}]")
+    
+    # Manifest Generation
+    import subprocess
+    try:
+        git_sha = subprocess.check_output(["git", "rev-parse", "HEAD"]).decode("utf-8").strip()
+        git_branch = subprocess.check_output(["git", "rev-parse", "--abbrev-ref", "HEAD"]).decode("utf-8").strip()
+    except Exception:
+        git_sha = "unknown"
+        git_branch = "unknown"
+
+    manifest = {
+        "input_file": str(input_file.name),
+        "input_sha256": get_file_sha256(input_file),
+        "input_rows": len(df),
+        "input_cols": len(df.columns),
+        "git_branch": git_branch,
+        "git_commit": git_sha,
+        "python_version": platform.python_version(),
+        "pandas_version": pd.__version__,
+        "numpy_version": np.__version__,
+        "opencv_version": cv2.__version__,
+        "bootstrap_seed": boot_seed,
+        "bootstrap_iterations": n_boot
+    }
+    
+    with open(OUT_DIR / "counterfactual_evidence_manifest.json", "w") as f:
+        json.dump(manifest, f, indent=2)
 
 if __name__ == "__main__":
     run_counterfactual_comparison()

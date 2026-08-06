@@ -17,7 +17,8 @@ This document serves as a scientific transparency record outlining deviations fr
 These deviations will be addressed in the updated scripts:
 - The fixed budgets (10, 30, 60) and area threshold scaling (<500) are now locked.
 - The exact decomposition will correctly pair clean and corrupted predictions for the same cell and seed, utilizing unclipped raw circularity.
-- The area-preserving perturbation will strictly enforce `abs(contour_area_change_rel) <= 0.02` in addition to pixel-count equality.
-- The counterfactual comparison will use strict within-cell pairing by matching the nearest shape instance (by Dice) to each counterfactual instance, resolving ties deterministically.
-- A 10,000 iteration cell-level paired bootstrap will compute the 95% CI.
+- The area-preserving perturbation will explicitly distinguish between exact `pixel_count` conservation and OpenCV `contour_area`. Strict eligibility requires `pixel_count_change == 0` AND `abs(contour_area_change_rel) <= 0.02`.
+- The exact decomposition enforces strict uniqueness: clean rows must be unique on `cell_id + model + seed`, and corrupted rows unique on `cell_id + model + seed + degradation + severity`. Duplicates trigger a hard error.
+- The counterfactual comparison strictly matches within-cell, ordering counterfactual instances by `low, medium, high` and selecting shapes by minimal absolute Dice difference, tie-broken by perturbation name and severity. Shapes are consumed without replacement.
+- The statistical unit for bootstrapping is strictly the `cell_id`. Instance-level matched differences are first averaged per cell, and the bootstrap resamples exclusively from these cell averages to prevent instance-count weighting bias.
 - Final decisions will strictly map the bootstrapped confidence intervals and paired differences to the predefined categories.

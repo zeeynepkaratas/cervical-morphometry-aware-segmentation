@@ -485,10 +485,15 @@ def _run_cell(
                 / (float(np.logical_or(perturbed, nucleus_gt).sum()) + 1e-8)
             ),
             # Area
-            "gt_area": base["area"],
-            "perturbed_area": m["area"],
-            "area_change": m["area"] - base["area"],
-            "area_change_rel": (m["area"] - base["area"]) / (base["area"] + 1e-6),
+            # Pixel Count
+            "gt_pixel_count": np.count_nonzero(nucleus_gt),
+            "perturbed_pixel_count": np.count_nonzero(perturbed),
+            "pixel_count_change": int(np.count_nonzero(perturbed)) - int(np.count_nonzero(nucleus_gt)),
+            # Contour Area
+            "gt_contour_area": base["area"],
+            "perturbed_contour_area": m["area"],
+            "contour_area_change": m["area"] - base["area"],
+            "contour_area_change_rel": (m["area"] - base["area"]) / (base["area"] + 1e-6),
             # Perimeter
             "gt_perimeter": base["perimeter"],
             "perturbed_perimeter": m["perimeter"],
