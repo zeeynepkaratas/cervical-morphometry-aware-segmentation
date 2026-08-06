@@ -1,0 +1,2 @@
+n_matched_pairs,n_unique_cells,unmatched_cf_instances,mean_paired_circ_diff,median_paired_circ_diff,ci_lower_95,ci_upper_95,positive_diff_cell_fraction,mean_cf_abs_nc_change
+203,182,11,-0.0023399701711887574,-0.00250847679798225,-0.006680330624120837,0.0019183262753775182,0.45604395604395603,0.0
