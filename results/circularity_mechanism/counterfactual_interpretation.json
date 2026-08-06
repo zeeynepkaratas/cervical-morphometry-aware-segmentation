@@ -1,0 +1,14 @@
+{
+  "decision": "PARTIAL_ADDITIONAL_SUPPORT",
+  "reasoning": "Counterfactual difference was 0.0054 across 182 matched cells.",
+  "metrics": {
+    "n_cells": 182,
+    "shape_instances": 342,
+    "counterfactual_instances": 214,
+    "mean_abs_circ_shape": 0.015818792889659768,
+    "mean_abs_circ_counterfactual": 0.021256239793495193,
+    "diff_abs_circ": 0.005437446903835425,
+    "mean_abs_nc_shape": 0.14025400014914335,
+    "mean_abs_nc_counterfactual": 0.0
+  }
+}
