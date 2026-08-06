@@ -71,6 +71,9 @@ PERTURBATIONS: list[tuple[str, str]] = [
     ("protrusion",   "high"),
     ("indentation",  "low"),
     ("indentation",  "high"),
+    ("area_preserving_boundary", "low"),
+    ("area_preserving_boundary", "medium"),
+    ("area_preserving_boundary", "high"),
 ]
 
 # ---------------------------------------------------------------------------
@@ -297,6 +300,98 @@ def perturb_indentation(
     else:
         return _add_contour_bumps(nucleus, cytoplasm, 2, 10, False, cell_id, severity, "indentation")
 
+def perturb_area_preserving_boundary(
+    nucleus: np.ndarray, cytoplasm: np.ndarray, severity: str, cell_id: str
+) -> tuple[np.ndarray, bool, str]:
+    """Exact pixel-exchange area-preserving counterfactual perturbation.
+    
+    Exchanges exactly `k` pixels by adding them near one contour point
+    and removing them near another, holding area constant.
+    """
+    area = np.count_nonzero(nucleus)
+    if area < 50:
+        return nucleus, False, "nucleus_too_small"
+        
+    # Budgets
+    k = {"low": 10, "medium": 30, "high": 60}.get(severity, 10)
+    if area < 500:
+        k = max(2, k // 2)
+        
+    kernel = np.array([[0, 1, 0], [1, 1, 1], [0, 1, 0]], dtype=np.uint8)
+    dilated = cv2.dilate(nucleus.astype(np.uint8), kernel, iterations=1).astype(bool)
+    eroded = cv2.erode(nucleus.astype(np.uint8), kernel, iterations=1).astype(bool)
+    
+    bg_adj = dilated & ~nucleus & cytoplasm  # Must stay inside cell
+    fg_adj = nucleus & ~eroded
+    
+    bg_pts = np.argwhere(bg_adj)
+    fg_pts = np.argwhere(fg_adj)
+    
+    if len(bg_pts) < k or len(fg_pts) < k:
+        return nucleus, False, "insufficient_boundary_pixels"
+        
+    mask_u8 = nucleus.astype(np.uint8)
+    contours, _ = cv2.findContours(mask_u8, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    if not contours:
+        return nucleus, False, "no_contour"
+    contour = max(contours, key=cv2.contourArea).squeeze(axis=1) # (N,2) xy
+    if len(contour) < 20:
+        return nucleus, False, "contour_too_short"
+        
+    for attempt in range(20):
+        seed = _perturb_seed(cell_id, "area_preserving", f"{severity}_{attempt}")
+        rng = np.random.default_rng(seed)
+        
+        # Pick addition center
+        idx1 = rng.integers(0, len(contour))
+        pt1 = contour[idx1] # (x,y)
+        
+        # Pick removal center far from addition
+        idx2 = (idx1 + len(contour)//2 + rng.integers(-len(contour)//8, len(contour)//8)) % len(contour)
+        pt2 = contour[idx2] # (x,y)
+        
+        # Distances to pt1 (y,x so reverse pt1)
+        pt1_yx = np.array([pt1[1], pt1[0]])
+        dist1 = np.sum((bg_pts - pt1_yx)**2, axis=1)
+        add_indices = np.argsort(dist1)[:k]
+        to_add = bg_pts[add_indices]
+        
+        # Distances to pt2
+        pt2_yx = np.array([pt2[1], pt2[0]])
+        dist2 = np.sum((fg_pts - pt2_yx)**2, axis=1)
+        remove_indices = np.argsort(dist2)[:k]
+        to_remove = fg_pts[remove_indices]
+        
+        # Apply perturbation
+        new_mask = nucleus.copy()
+        new_mask[to_add[:, 0], to_add[:, 1]] = True
+        new_mask[to_remove[:, 0], to_remove[:, 1]] = False
+        
+        # Topological checks
+        new_u8 = new_mask.astype(np.uint8)
+        new_contours, hierarchy = cv2.findContours(new_u8, cv2.RETR_CCOMP, cv2.CHAIN_APPROX_SIMPLE)
+        
+        if not new_contours:
+            continue
+            
+        # Must be single connected component (ignoring tiny noise if any, but better strictly 1 external)
+        external_count = 0
+        has_hole = False
+        if hierarchy is not None:
+            for i, h in enumerate(hierarchy[0]):
+                if h[3] == -1: # external
+                    external_count += 1
+                else:
+                    has_hole = True
+                    
+        if external_count != 1 or has_hole:
+            continue
+            
+        # Valid candidate!
+        return new_mask, True, ""
+        
+    return nucleus, False, "no_valid_counterfactual"
+
 
 PERTURB_FN: dict[str, Callable] = {
     "erosion":     perturb_erosion,
@@ -304,6 +399,7 @@ PERTURB_FN: dict[str, Callable] = {
     "jitter":      perturb_jitter,
     "protrusion":  perturb_protrusion,
     "indentation": perturb_indentation,
+    "area_preserving_boundary": perturb_area_preserving_boundary,
 }
 
 
