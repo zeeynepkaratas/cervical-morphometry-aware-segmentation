@@ -1,14 +1,15 @@
 {
-  "decision": "PARTIAL_ADDITIONAL_SUPPORT",
-  "reasoning": "Counterfactual difference was 0.0054 across 182 matched cells.",
+  "decision": "ADDITIONAL_SUPPORT_NOT_OBSERVED",
+  "reasoning": "Cell-level bootstrap 95% CI for paired absolute circularity change difference was [-0.00668, 0.00192] with mean -0.00234.",
   "metrics": {
-    "n_cells": 182,
-    "shape_instances": 342,
-    "counterfactual_instances": 214,
-    "mean_abs_circ_shape": 0.015818792889659768,
-    "mean_abs_circ_counterfactual": 0.021256239793495193,
-    "diff_abs_circ": 0.005437446903835425,
-    "mean_abs_nc_shape": 0.14025400014914335,
-    "mean_abs_nc_counterfactual": 0.0
+    "n_matched_pairs": 203,
+    "n_unique_cells": 182,
+    "unmatched_cf_instances": 11,
+    "mean_paired_circ_diff": -0.0023399701711887574,
+    "median_paired_circ_diff": -0.00250847679798225,
+    "ci_lower_95": -0.006680330624120837,
+    "ci_upper_95": 0.0019183262753775182,
+    "positive_diff_cell_fraction": 0.45604395604395603,
+    "mean_cf_abs_nc_change": 0.0
   }
 }
