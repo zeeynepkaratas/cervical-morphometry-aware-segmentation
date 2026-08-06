@@ -1,10 +1,28 @@
 {
-  "input_file": "controlled_mask_perturbations.csv",
-  "input_sha256": "af8f332c03700fd0ef29817c0e57b31937a1cdeb1ee36dbff7e1ad1f7f966f6c",
-  "input_rows": 5486,
-  "input_cols": 27,
-  "git_branch": "feature/area-preserving-counterfactual",
-  "git_commit": "95f49965bf4f1c8e30515564142cef0b6208cb31",
+  "inputs": [
+    {
+      "file": "controlled_mask_perturbations.csv",
+      "sha256": "af8f332c03700fd0ef29817c0e57b31937a1cdeb1ee36dbff7e1ad1f7f966f6c",
+      "rows": 5486,
+      "cols": 27
+    },
+    {
+      "file": "real_prediction_area_perimeter.csv",
+      "sha256": "492c907278405789528ea4a104e13e2249cce23c8be5f39824e40af73b1467da",
+      "rows": 4372,
+      "cols": 34
+    }
+  ],
+  "outputs": {
+    "log_decomposition_per_cell.csv": "d3194dec4fa94427af0fb7770798e09bc21e507ed49bbe349dd2495e2edebee6",
+    "log_decomposition_summary.csv": "08b0c946f1b9869085589853584e69ac5a6349d93db62e26504aa7d84a0fc956",
+    "area_preserving_counterfactual_pairs.csv": "a1f587be088840bec393ae3c03a3e9c9d6e82fada922298a74171acd89387d23",
+    "area_preserving_counterfactual_cell_summary.csv": "30e9298818492fe8676989fbd0366caaa9976deadb05bf017435a6d5f3569df1",
+    "area_preserving_counterfactual_summary.csv": "f9b68e96c31a0f72e5d204890190edbfbc0bcf9af9a35df23bb6d29302324328",
+    "counterfactual_interpretation.json": "0b7b8af2ff4ab4cad21eca9a76fde1aea5d32ccc9084c6e8acb43d2b1cb4efef"
+  },
+  "git_branch": "manuscript/v1",
+  "git_commit": "f0699c1b3494702ea2eabbb5e768a8b88e194b10",
   "python_version": "3.13.5",
   "pandas_version": "3.0.5",
   "numpy_version": "2.2.3",
