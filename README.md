@@ -20,7 +20,7 @@ The project uses standard PyTorch and data science libraries.
 ```bash
 pip install -r requirements.txt
 ```
-To reproduce the exact verified environment on Windows (Python 3.13), refer to the platform-specific `requirements-lock-windows-py313.txt`.
+`requirements-lock-windows-py313.txt` records a clean Windows/Python 3.13 installation environment that passes the repository tests. The exact environment used to generate the committed statistical results is recorded separately in `counterfactual_evidence_manifest.json`.
 
 ## Branch Structure
 The project maintains a safe, strict separation of concerns via branching:
