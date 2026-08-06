@@ -20,16 +20,17 @@ The project uses standard PyTorch and data science libraries.
 ```bash
 pip install -r requirements.txt
 ```
-To reproduce the exact verified environment, refer to `requirements-lock.txt`.
+To reproduce the exact verified environment on Windows (Python 3.13), refer to the platform-specific `requirements-lock-windows-py313.txt`.
 
 ## Branch Structure
 The project maintains a safe, strict separation of concerns via branching:
 - `main`: The secure baseline containing the finalized target-specific conformal coverage and pilot results.
 - `feature/circularity-mechanism-analysis`: Contains the deep-dive mechanism analysis evaluating boundary vs. shape perturbation under noise.
+- `feature/area-preserving-counterfactual`: Contains the area-clamped strict perimeter effect isolation audit.
 - `manuscript/v1`: The canonical manuscript branch containing the fully validated statistical mechanisms, deterministic bootstrapping, and evidence manifests. This branch represents all repository documentation moving forward.
 
 ## Scientific Findings Summary
-The circularity mechanism analysis provides evidence that under Gaussian noise, high-frequency boundary irregularities cause severe degradation of the perimeter measurements. Circularity degradation was more strongly associated with direct perimeter error ($\rho = 0.586$) than with area error, while controlled boundary perturbations affected circularity substantially more than the N/C ratio. 
+The circularity mechanism analysis provides evidence that under Gaussian noise, Gaussian-noise-induced boundary irregularities were associated with larger direct-perimeter errors and circularity degradation. Circularity degradation was more strongly associated with direct perimeter error ($\rho = 0.586$) than with area error, while controlled boundary perturbations affected circularity substantially more than the N/C ratio. 
 
 **Exact Log-Ratio Decomposition:** 
 Algebraic decomposition showed that perimeter contributions exceeded area contributions in most valid clean–corrupted pairs ($65.23\%$ perimeter dominant, CI: $[62.20\%, 68.26\%]$). 
@@ -44,7 +45,22 @@ The area-clamped counterfactual analysis did not provide additional evidence tha
 All perturbations use deterministic, hashed seeds anchored to unique cell IDs to ensure exact reproducibility. 
 
 **Command Sequence:**
-1. Preparation of existing frozen prediction and direct-mask evaluation tables.
-2. `python src/mask_perturbation.py` (Creates the controlled perturbation CSV).
-3. `python experiments/run_counterfactual_analysis.py` (Runs the exact decomposition and area-preserving matched counterfactual runner, outputting to JSON/CSV manifests).
-4. `python -m pytest tests/ -v` (Validates deterministic logic, leakages, and topological constraints).
+1. Generate real predictions and baseline correlations:
+   ```bash
+   python experiments/run_circularity_mechanism.py --phase all
+   ```
+   *Verification:* `Test-Path "results/circularity_mechanism/real_prediction_area_perimeter.csv"` (PowerShell) or `test -f results/circularity_mechanism/real_prediction_area_perimeter.csv` (Bash).
+2. Generate controlled perturbations:
+   ```bash
+   python experiments/run_circularity_mechanism.py --phase B
+   ```
+   *(Note: Phase B is included in `--phase all`, so `controlled_mask_perturbations.csv` is already generated.)*
+3. Run exact decomposition and matched counterfactual analysis:
+   ```bash
+   python experiments/run_counterfactual_analysis.py
+   ```
+   *Verification:* `Test-Path "results/circularity_mechanism/counterfactual_interpretation.json"`
+4. Validate deterministic logic, leakages, and topological constraints:
+   ```bash
+   python -m pytest tests/ -v
+   ```
