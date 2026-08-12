@@ -1,0 +1,21 @@
+{
+  "repo": "C:\\tmp\\cervical-morphometry-aware-segmentation",
+  "branch": "feature/closing-correction-confirmatory",
+  "starting_commit": "f934e4dbdae682cbc22c2697ca268aac20fc5ca9",
+  "preregistration_commit": "f934e4dbdae682cbc22c2697ca268aac20fc5ca9",
+  "training": "NO",
+  "new_inference": "YES",
+  "new_inference_reason": "Raw prediction masks were not persisted; frozen checkpoint inference reconstructs masks for GT-blind local null generation.",
+  "candidate_proposals": 2048,
+  "max_accepted_edits": 256,
+  "bootstrap_repeats": 10000,
+  "bootstrap_seed": 3041090643,
+  "gt_used_during_null_generation": false,
+  "circularity_used_during_null_matching": false,
+  "under_over_used_during_null_generation": false,
+  "locked_input_hashes_before": {
+    "primary_verdict": "b9e0656fcb5e72b9cb358454cc192c977d1f603e441494b91bc6fd26502c6edf",
+    "primary_per_seed": "9c5780a5e76af694b83bbf744c5c2c9fdd2fd32bdeb560f0ba8d522f29dbebba",
+    "a_summary": "4be981579bdca6c648d4c8d862738b66b5c13fe721deff1ed9ca3bcf479f8cdf"
+  }
+}

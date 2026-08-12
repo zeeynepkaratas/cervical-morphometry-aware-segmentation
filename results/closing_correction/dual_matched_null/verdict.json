@@ -1,0 +1,38 @@
+{
+  "verdict": "DUAL_MATCHED_SPECIFICITY_SUPPORTED",
+  "matching_status": "ADEQUATE",
+  "specificity": {
+    "specific_advantage": {
+      "mean": 0.0012288219627506899,
+      "median": 2.330418968909953e-09,
+      "ci_low": 0.00044584859378715973,
+      "ci_high": 0.0023621658202676796,
+      "n": 184,
+      "pct_cells_closing_better": 57.065217391304344
+    },
+    "closing_benefit": {
+      "mean": 0.023514021060154235,
+      "median": 0.010225349611932805,
+      "ci_low": 0.01608627738354429,
+      "ci_high": 0.030978246576152342,
+      "n": 184
+    },
+    "null_benefit": {
+      "mean": 0.022337881390789145,
+      "median": 0.009747396255974317,
+      "ci_low": 0.014882812818465496,
+      "ci_high": 0.029712516787608348,
+      "n": 184
+    }
+  },
+  "quality_checks": {
+    "n_cells": 184,
+    "no_silent_exclusions": true,
+    "locked_hashes_unchanged": true,
+    "no_gt_leakage_in_candidate_selection": true,
+    "no_circularity_based_candidate_selection": true,
+    "no_result_dependent_rerun": true
+  },
+  "primary_correction": "CORRECTION_SUPPORTED",
+  "primary_correction_changed": false
+}

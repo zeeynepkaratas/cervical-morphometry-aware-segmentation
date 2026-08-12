@@ -1,0 +1,191 @@
+{
+  "metadata": {
+    "repo": "C:\\tmp\\cervical-morphometry-aware-segmentation",
+    "branch": "feature/closing-correction-confirmatory",
+    "starting_commit": "f934e4dbdae682cbc22c2697ca268aac20fc5ca9",
+    "preregistration_commit": "f934e4dbdae682cbc22c2697ca268aac20fc5ca9",
+    "training": "NO",
+    "new_inference": "YES",
+    "new_inference_reason": "Raw prediction masks were not persisted; frozen checkpoint inference reconstructs masks for GT-blind local null generation.",
+    "candidate_proposals": 2048,
+    "max_accepted_edits": 256,
+    "bootstrap_repeats": 10000,
+    "bootstrap_seed": 3041090643,
+    "gt_used_during_null_generation": false,
+    "circularity_used_during_null_matching": false,
+    "under_over_used_during_null_generation": false,
+    "locked_input_hashes_before": {
+      "primary_verdict": "b9e0656fcb5e72b9cb358454cc192c977d1f603e441494b91bc6fd26502c6edf",
+      "primary_per_seed": "9c5780a5e76af694b83bbf744c5c2c9fdd2fd32bdeb560f0ba8d522f29dbebba",
+      "a_summary": "4be981579bdca6c648d4c8d862738b66b5c13fe721deff1ed9ca3bcf479f8cdf"
+    },
+    "locked_input_hashes_after": {
+      "primary_verdict": "b9e0656fcb5e72b9cb358454cc192c977d1f603e441494b91bc6fd26502c6edf",
+      "primary_per_seed": "9c5780a5e76af694b83bbf744c5c2c9fdd2fd32bdeb560f0ba8d522f29dbebba",
+      "a_summary": "4be981579bdca6c648d4c8d862738b66b5c13fe721deff1ed9ca3bcf479f8cdf"
+    }
+  },
+  "matching": {
+    "area": {
+      "mean": 0.0,
+      "median": 0.0,
+      "q1": 0.0,
+      "q3": 0.0,
+      "iqr": 0.0,
+      "p90": 0.0,
+      "p95": 0.0
+    },
+    "perimeter": {
+      "mean": 0.07293107814115027,
+      "median": 7.152557373046875e-07,
+      "q1": 2.384185791015625e-07,
+      "q3": 0.10050511360168457,
+      "iqr": 0.10050487518310547,
+      "p90": 0.2426406979560852,
+      "p95": 0.2426417887210846
+    },
+    "joint": {
+      "mean": 0.004051385140014419,
+      "median": 4.2936007067846856e-08,
+      "q1": 1.9489068170019016e-08,
+      "q3": 0.005787274864064218,
+      "iqr": 0.005787255374996048,
+      "p90": 0.014312166251670947,
+      "p95": 0.016674383471147226
+    },
+    "target_dA_mean": 14.771739130434783,
+    "null_dA_mean": 14.771739130434783,
+    "target_dP_mean": -7.504335545651291,
+    "null_dP_mean": -7.447042132201402,
+    "systematic_directional_mismatch": false,
+    "better_than_original_null_area_mean": true,
+    "better_than_original_null_perimeter_mean": true,
+    "matching_status": "ADEQUATE"
+  },
+  "specificity": {
+    "specific_advantage": {
+      "mean": 0.0012288219627506899,
+      "median": 2.330418968909953e-09,
+      "ci_low": 0.00044584859378715973,
+      "ci_high": 0.0023621658202676796,
+      "n": 184,
+      "pct_cells_closing_better": 57.065217391304344
+    },
+    "closing_benefit": {
+      "mean": 0.023514021060154235,
+      "median": 0.010225349611932805,
+      "ci_low": 0.01608627738354429,
+      "ci_high": 0.030978246576152342,
+      "n": 184
+    },
+    "null_benefit": {
+      "mean": 0.022337881390789145,
+      "median": 0.009747396255974317,
+      "ci_low": 0.014882812818465496,
+      "ci_high": 0.029712516787608348,
+      "n": 184
+    }
+  },
+  "safety": [
+    {
+      "metric": "nucleus_dice",
+      "raw_mean": 0.8818039699035346,
+      "raw_median": 0.9225842734354015,
+      "closing_mean": 0.8824261228203875,
+      "closing_median": 0.9231177900868024,
+      "dual_null_mean": 0.8819244871001072,
+      "dual_null_median": 0.9229431642796944
+    },
+    {
+      "metric": "foreground_dice",
+      "raw_mean": 0.8268071549514608,
+      "raw_median": 0.8485207975843019,
+      "closing_mean": 0.8270869111284308,
+      "closing_median": 0.8476131480393181,
+      "dual_null_mean": 0.8268518230481358,
+      "dual_null_median": 0.8476131480393181
+    },
+    {
+      "metric": "nc_ae",
+      "raw_mean": 0.26190457747582085,
+      "raw_median": 0.11163064853016919,
+      "closing_mean": 0.26192107434009254,
+      "closing_median": 0.10995090407160246,
+      "dual_null_mean": 0.26192107434009254,
+      "dual_null_median": 0.10995090407160246
+    },
+    {
+      "metric": "area_ae",
+      "raw_mean": 539.7119565217391,
+      "raw_median": 325.5,
+      "closing_mean": 539.445652173913,
+      "closing_median": 309.0,
+      "dual_null_mean": 539.4510869565217,
+      "dual_null_median": 309.0
+    },
+    {
+      "metric": "raw_invalid_rate",
+      "raw_mean": 0.003623188405797101,
+      "raw_median": 0.0
+    },
+    {
+      "metric": "closing_invalid_rate",
+      "closing_mean": 0.003623188405797101,
+      "closing_median": 0.0
+    },
+    {
+      "metric": "dual_null_invalid_rate",
+      "dual_null_mean": 0.003623188405797101,
+      "dual_null_median": 0.0
+    }
+  ],
+  "under_over": [
+    {
+      "roundness_group": "under_circular",
+      "n": 116,
+      "benefit_closing_mean": 0.04690342431969671,
+      "benefit_closing_median": 0.036557407732482367,
+      "benefit_closing_ci_low": 0.03767791120129673,
+      "benefit_closing_ci_high": 0.056228079223099026,
+      "benefit_null_mean": 0.04525064768341394,
+      "benefit_null_median": 0.03860419419203304,
+      "benefit_null_ci_low": 0.036103671196266035,
+      "benefit_null_ci_high": 0.05459863197145882,
+      "specific_advantage_mean": 0.0018101788603449894,
+      "specific_advantage_median": 3.1036109793269873e-10,
+      "specific_advantage_ci_low": 0.0005924642304670892,
+      "specific_advantage_ci_high": 0.0035257767628711647
+    },
+    {
+      "roundness_group": "over_circular",
+      "n": 68,
+      "benefit_closing_mean": -0.016385549206124114,
+      "benefit_closing_median": -0.012033193690338062,
+      "benefit_closing_ci_low": -0.02033560163868828,
+      "benefit_closing_ci_high": -0.012790045885304196,
+      "benefit_null_mean": -0.0167486022848649,
+      "benefit_null_median": -0.012292785514157523,
+      "benefit_null_ci_low": -0.02070197033690148,
+      "benefit_null_ci_high": -0.013135720690368271,
+      "specific_advantage_mean": 0.0002370954903839435,
+      "specific_advantage_median": 5.762991694968633e-09,
+      "specific_advantage_ci_low": 3.713063172003548e-05,
+      "specific_advantage_ci_high": 0.0004259179908176369
+    },
+    {
+      "roundness_group": "equal",
+      "n": 0
+    }
+  ],
+  "verdict": "DUAL_MATCHED_SPECIFICITY_SUPPORTED",
+  "quality_checks": {
+    "n_cells": 184,
+    "no_silent_exclusions": true,
+    "locked_hashes_unchanged": true,
+    "no_gt_leakage_in_candidate_selection": true,
+    "no_circularity_based_candidate_selection": true,
+    "no_result_dependent_rerun": true
+  },
+  "primary_correction_changed": false,
+  "protocol_deviation": "NONE"
+}
