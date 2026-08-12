@@ -1,0 +1,19 @@
+{
+  "perimeter_dominant_fraction": {
+    "mean": 0.6522935779816513,
+    "ci_low": 0.6217870257037944,
+    "ci_high": 0.6819997069019678,
+    "bootstrap_repeats": 10000,
+    "n_cells": 184
+  },
+  "r2_existing_all_scope": {
+    "values": [
+      0.5032829788368892,
+      0.5032829788368892,
+      0.5032829788368892
+    ],
+    "min": 0.5032829788368892,
+    "max": 0.5032829788368892,
+    "note": "Existing all-scope R2 values are reported from the locked regression output; no new regression model is selected."
+  }
+}
