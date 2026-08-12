@@ -1,0 +1,31 @@
+{
+  "primary": {
+    "model": "baseline",
+    "input_group_count": 552,
+    "per_seed_rows": 552,
+    "missing_raw_or_closing_pairs": 0,
+    "nonfinite_raw_circularity_mismatch_count": 2,
+    "nonfinite_full_circularity_mismatch_count": 2,
+    "nonfinite_identity_residual_count": 2,
+    "max_abs_raw_circularity_mismatch": 1.1102230246251565e-16,
+    "max_abs_full_circularity_mismatch": 1.1102230246251565e-16,
+    "max_abs_identity_residual": 5.551115123125783e-17,
+    "mean_abs_identity_residual": 1.0092936587501423e-19
+  },
+  "sensitivity": {
+    "model": "nc_aware_lambda_0p10",
+    "input_group_count": 552,
+    "per_seed_rows": 552,
+    "missing_raw_or_closing_pairs": 0,
+    "nonfinite_raw_circularity_mismatch_count": 5,
+    "nonfinite_full_circularity_mismatch_count": 5,
+    "nonfinite_identity_residual_count": 5,
+    "max_abs_raw_circularity_mismatch": 1.1102230246251565e-16,
+    "max_abs_full_circularity_mismatch": 1.1102230246251565e-16,
+    "max_abs_identity_residual": 5.551115123125783e-17,
+    "mean_abs_identity_residual": 1.0148290901509658e-19
+  },
+  "expected_test_cells": 184,
+  "primary_cell_median_rows": 184,
+  "no_cells_dropped_silently": true
+}

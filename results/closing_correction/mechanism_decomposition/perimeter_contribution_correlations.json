@@ -1,0 +1,14 @@
+{
+  "primary_baseline": {
+    "model": "baseline",
+    "n_cells_with_contribution": 184,
+    "rho_abs_perimeter_contribution_vs_benefit_perimeter": -0.49996147252027506,
+    "rho_abs_perimeter_contribution_vs_benefit_full": -0.4856735566642908
+  },
+  "sensitivity_nc_aware": {
+    "model": "nc_aware_lambda_0p10",
+    "n_cells_with_contribution": 184,
+    "rho_abs_perimeter_contribution_vs_benefit_perimeter": -0.4992313767794879,
+    "rho_abs_perimeter_contribution_vs_benefit_full": -0.4839186299628209
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "repo": "C:\\tmp\\cervical-morphometry-aware-segmentation",
+  "branch": "feature/closing-correction-confirmatory",
+  "preregistration_commit": "ba7f6a5014bfaaab62374dbfb3e294a6e90e0136",
+  "analysis_commit_at_runtime": "ba7f6a5014bfaaab62374dbfb3e294a6e90e0136",
+  "training": "NO",
+  "new_inference": "NO",
+  "input_per_seed": "C:\\tmp\\cervical-morphometry-aware-segmentation\\results\\closing_correction\\test_results_per_seed.csv",
+  "input_per_seed_sha256": "9c5780a5e76af694b83bbf744c5c2c9fdd2fd32bdeb560f0ba8d522f29dbebba",
+  "input_verdict_sha256": "b9e0656fcb5e72b9cb358454cc192c977d1f603e441494b91bc6fd26502c6edf",
+  "primary_correction_verdict": "CORRECTION_SUPPORTED",
+  "primary_correction_verdict_changed": false,
+  "bootstrap_repeats": 10000,
+  "bootstrap_seed": 2105508929
+}
