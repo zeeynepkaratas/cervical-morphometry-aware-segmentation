@@ -1,0 +1,19 @@
+{
+  "seed": 20260803,
+  "baseline_checkpoint": "C:\\tmp\\cervical-morphometry-aware-segmentation\\results\\pilot\\fair_repeat\\checkpoints\\baseline_seed_20260803_best_val_dice.pt",
+  "baseline_checkpoint_sha256": "8c52642452c674bc4b929a7b643c9f69f0fc600d2f7b5eafdf733287e98eed51",
+  "baseline_best_epoch": 11,
+  "baseline_validation_dice": 0.8219578438913016,
+  "first_train_batch_generator_seed": 20260804,
+  "batch_size": 8,
+  "L_seg_initial": 0.4625048339366913,
+  "L_boundary_initial": 0.9738320112228394,
+  "target_fraction_of_segmentation_loss": 0.15,
+  "lambda_boundary": 0.07123993080016819,
+  "lambda_boundary_times_L_boundary_initial": 0.06937572509050369,
+  "fine_tune_learning_rate": 0.0001,
+  "fine_tune_learning_rate_reason": "Pre-specified before validation because this is lightweight fine-tuning from an already trained checkpoint.",
+  "boundary_definition": "3x3 morphological dilation minus erosion on GT nucleus mask and GT foreground mask; union of both bands.",
+  "validation_used_for_lambda": false,
+  "parameter_count": 7763107
+}

@@ -1,0 +1,124 @@
+{
+  "history": [
+    {
+      "seed": 20260803,
+      "epoch": 1,
+      "epoch_seconds": 81.78957009315491,
+      "estimated_remaining_seconds": 736.1061308383942,
+      "train_total_loss": 0.5971407933668657,
+      "train_segmentation_loss": 0.5269697108051994,
+      "train_boundary_loss": 0.9849964672868902,
+      "lambda_boundary": 0.07123993080016819,
+      "weighted_boundary_loss": 0.07017108016792818,
+      "learning_rate": 0.0001
+    },
+    {
+      "seed": 20260803,
+      "epoch": 2,
+      "epoch_seconds": 62.938966035842896,
+      "estimated_remaining_seconds": 503.51172828674316,
+      "train_total_loss": 0.5822703881697221,
+      "train_segmentation_loss": 0.5135120299729434,
+      "train_boundary_loss": 0.965165947784077,
+      "lambda_boundary": 0.07123993080016819,
+      "weighted_boundary_loss": 0.0687583553308164,
+      "learning_rate": 0.0001
+    },
+    {
+      "seed": 20260803,
+      "epoch": 3,
+      "epoch_seconds": 66.84184718132019,
+      "estimated_remaining_seconds": 467.89293026924133,
+      "train_total_loss": 0.574010743336244,
+      "train_segmentation_loss": 0.5065029604868455,
+      "train_boundary_loss": 0.9476115530187433,
+      "lambda_boundary": 0.07123993080016819,
+      "weighted_boundary_loss": 0.06750778146249518,
+      "learning_rate": 0.0001
+    },
+    {
+      "seed": 20260803,
+      "epoch": 4,
+      "epoch_seconds": 56.5669322013855,
+      "estimated_remaining_seconds": 339.401593208313,
+      "train_total_loss": 0.5645016144622456,
+      "train_segmentation_loss": 0.49717474308880893,
+      "train_boundary_loss": 0.9450720602815802,
+      "lambda_boundary": 0.07123993080016819,
+      "weighted_boundary_loss": 0.06732686817563215,
+      "learning_rate": 0.0001
+    },
+    {
+      "seed": 20260803,
+      "epoch": 5,
+      "epoch_seconds": 66.8480076789856,
+      "estimated_remaining_seconds": 334.240038394928,
+      "train_total_loss": 0.551853413473476,
+      "train_segmentation_loss": 0.48529824289408596,
+      "train_boundary_loss": 0.9342395836656744,
+      "lambda_boundary": 0.07123993080016819,
+      "weighted_boundary_loss": 0.06655516329112059,
+      "learning_rate": 0.0001
+    },
+    {
+      "seed": 20260803,
+      "epoch": 6,
+      "epoch_seconds": 68.20004320144653,
+      "estimated_remaining_seconds": 272.80017280578613,
+      "train_total_loss": 0.5503704163161192,
+      "train_segmentation_loss": 0.48398687514391814,
+      "train_boundary_loss": 0.9318305286494168,
+      "lambda_boundary": 0.07123993080016819,
+      "weighted_boundary_loss": 0.0663835423784686,
+      "learning_rate": 0.0001
+    },
+    {
+      "seed": 20260803,
+      "epoch": 7,
+      "epoch_seconds": 63.314101457595825,
+      "estimated_remaining_seconds": 189.94230437278748,
+      "train_total_loss": 0.5540875163945285,
+      "train_segmentation_loss": 0.4864499249241569,
+      "train_boundary_loss": 0.949433620409532,
+      "lambda_boundary": 0.07123993080016819,
+      "weighted_boundary_loss": 0.06763758541732821,
+      "learning_rate": 0.0001
+    },
+    {
+      "seed": 20260803,
+      "epoch": 8,
+      "epoch_seconds": 52.877540588378906,
+      "estimated_remaining_seconds": 105.75508117675781,
+      "train_total_loss": 0.5410755856470628,
+      "train_segmentation_loss": 0.47480926513671873,
+      "train_boundary_loss": 0.9301851250908592,
+      "lambda_boundary": 0.07123993080016819,
+      "weighted_boundary_loss": 0.06626632394281859,
+      "learning_rate": 0.0001
+    },
+    {
+      "seed": 20260803,
+      "epoch": 9,
+      "epoch_seconds": 68.71048259735107,
+      "estimated_remaining_seconds": 68.71048259735107,
+      "train_total_loss": 0.5301830817352642,
+      "train_segmentation_loss": 0.4635715300386602,
+      "train_boundary_loss": 0.9350310910831798,
+      "lambda_boundary": 0.07123993080016819,
+      "weighted_boundary_loss": 0.06661155022477148,
+      "learning_rate": 0.0001
+    },
+    {
+      "seed": 20260803,
+      "epoch": 10,
+      "epoch_seconds": 67.72220659255981,
+      "estimated_remaining_seconds": 0.0,
+      "train_total_loss": 0.5400436000390486,
+      "train_segmentation_loss": 0.47346894795244393,
+      "train_boundary_loss": 0.9345130833712492,
+      "lambda_boundary": 0.07123993080016819,
+      "weighted_boundary_loss": 0.0665746473912196,
+      "learning_rate": 0.0001
+    }
+  ]
+}
