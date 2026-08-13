@@ -61,6 +61,49 @@
     "partial_removed": true,
     "manual_destination": "data/raw/sipakmed/"
   },
+  "continued_archive_presence_check": {
+    "date": "2026-08-13",
+    "raw_directory": "data/raw/sipakmed/",
+    "required_image_archives_complete": false,
+    "archives": [
+      {
+        "name": "im_Superficial-Intermediate.7z",
+        "expected_bytes": 762939737,
+        "exists_locally": false,
+        "complete": false
+      },
+      {
+        "name": "im_Parabasal.7z",
+        "expected_bytes": 548667699,
+        "exists_locally": false,
+        "complete": false
+      },
+      {
+        "name": "im_Koilocytotic.7z",
+        "expected_bytes": 1290478065,
+        "exists_locally": false,
+        "complete": false
+      },
+      {
+        "name": "im_Metaplastic.7z",
+        "expected_bytes": 1396480123,
+        "exists_locally": false,
+        "complete": false
+      },
+      {
+        "name": "im_Dyskeratotic.7z",
+        "expected_bytes": 1182980549,
+        "exists_locally": false,
+        "complete": false
+      }
+    ],
+    "extraction_performed": false,
+    "direct_contour_inspection_performed": false,
+    "gt_rasterization_performed": false,
+    "eligibility_manifest_created": false,
+    "gt_alignment_qc_created": false,
+    "reason_not_completed": "required official image archives were absent locally"
+  },
   "source_level_counts": {
     "isolated_cell_images_official": 4049,
     "cluster_cell_images_official": 966,

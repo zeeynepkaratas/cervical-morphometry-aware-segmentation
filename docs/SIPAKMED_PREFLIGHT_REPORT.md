@@ -52,6 +52,18 @@ Checksums:
 
 Automatic download of `im_Superficial-Intermediate.7z` from the official host did not complete within a 40-minute command timeout. The incomplete local partial file was removed to avoid future confusion. The remaining official image archives were not downloaded in this run.
 
+Continued check on 2026-08-13:
+
+The five official image archives were checked again under `data/raw/sipakmed/`. None of the five required image archives were present locally, so archive integrity testing, extraction, complete file-level inventory, direct contour inspection, GT rasterization, eligibility-manifest generation, and GT alignment QC could not be performed without fabricating results.
+
+| Archive | Expected size bytes | Local status |
+| --- | ---: | --- |
+| `im_Superficial-Intermediate.7z` | 762939737 | missing |
+| `im_Parabasal.7z` | 548667699 | missing |
+| `im_Koilocytotic.7z` | 1290478065 | missing |
+| `im_Metaplastic.7z` | 1396480123 | missing |
+| `im_Dyskeratotic.7z` | 1182980549 | missing |
+
 Expected manual download destination:
 
 `data/raw/sipakmed/`
@@ -73,6 +85,8 @@ The official `Description_of_Features.pdf` states that boundaries of the cytopla
 ## File-Level Inventory
 
 Full file-level image and contour inventory was not performed because the official image archives were not fully available locally.
+
+No extraction was performed in the continued check because there were no complete official image archives to verify.
 
 Source-level verified counts:
 
@@ -109,6 +123,10 @@ Official documentation states that cytoplasm contour coordinates are provided.
 Meaning of cytoplasm contour:
 
 Not fully established from local contour files. The official PDF describes "the area of the cytoplasm and the nucleus" and separately names cytoplasm and nucleus feature tables. This supports the presence of a cytoplasm region annotation, but the whole-cell-including-nucleus vs cytoplasm-only distinction must still be verified directly from the contour coordinate files after the official image archives are available.
+
+Direct contour inspection status:
+
+Not performed. The required official image archives containing the contour coordinate files were absent locally.
 
 N/C computable:
 
@@ -167,6 +185,8 @@ Rationale:
 The official source is confirmed and official documentation states that both nucleus and cytoplasm contour coordinates are provided for the cluster and isolated-cell image directories. This makes SIPaKMeD technically plausible for a future nucleus-plus-cytoplasm morphometry preflight. However, the full official image archives were not available locally after the automatic download attempt timed out, so contour file format, contour semantics, image-annotation alignment, parent-source grouping, malformed-file rates, native geometry distributions, and deterministic loader behavior remain unverified.
 
 The next step must be a full official-archive download followed by a data-only archive/file/contour inventory. No model inference should be run before that inventory passes.
+
+After the continued check, the verdict remains `CONDITIONAL_GO` rather than `GO` because the full official data are still unavailable locally. It is not changed to `NO_GO` because the official source and documentation still support technical plausibility; the unresolved issue is local archive availability and direct contour verification, not a demonstrated annotation failure.
 
 ## Outcome-Blind Compliance
 
