@@ -1,0 +1,87 @@
+{
+  "preflight_type": "outcome_blind_technical_preflight",
+  "date": "2026-08-13",
+  "protocol_commit": "9c3d37df3a9bcf11353b5f40ed04bf98dc806d06",
+  "official_source": "https://www.cs.uoi.gr/~marina/sipakmed.html",
+  "official_citation": "Marina E. Plissiti, Panagiotis Dimitrakopoulos, Giorgos Sfikas, Christophoros Nikou, Olga Krikoni, Antonia Charchanti, SIPAKMED: A new dataset for feature and image based classification of normal and pathological cervical cells in Pap smear images, IEEE International Conference on Image Processing (ICIP), Athens, Greece, 7-10 October 2018.",
+  "permitted_use_observed": "Official page states the database is publicly available and can be used for experimental purposes with a request to cite the SIPaKMeD ICIP 2018 paper; no broader license text was found.",
+  "official_archives": [
+    {
+      "name": "im_Superficial-Intermediate.7z",
+      "url": "https://www.cs.uoi.gr/~marina/SIPAKMED/im_Superficial-Intermediate.7z",
+      "head_status": 200,
+      "content_length_bytes": 762939737
+    },
+    {
+      "name": "im_Parabasal.7z",
+      "url": "https://www.cs.uoi.gr/~marina/SIPAKMED/im_Parabasal.7z",
+      "head_status": 200,
+      "content_length_bytes": 548667699
+    },
+    {
+      "name": "im_Koilocytotic.7z",
+      "url": "https://www.cs.uoi.gr/~marina/SIPAKMED/im_Koilocytotic.7z",
+      "head_status": 200,
+      "content_length_bytes": 1290478065
+    },
+    {
+      "name": "im_Metaplastic.7z",
+      "url": "https://www.cs.uoi.gr/~marina/SIPAKMED/im_Metaplastic.7z",
+      "head_status": 200,
+      "content_length_bytes": 1396480123
+    },
+    {
+      "name": "im_Dyskeratotic.7z",
+      "url": "https://www.cs.uoi.gr/~marina/SIPAKMED/im_Dyskeratotic.7z",
+      "head_status": 200,
+      "content_length_bytes": 1182980549
+    },
+    {
+      "name": "Features_CELL.7z",
+      "url": "https://www.cs.uoi.gr/~marina/SIPAKMED/Features_CELL.7z",
+      "head_status": 200,
+      "content_length_bytes": 608820,
+      "sha256": "23cebcab368e337e135d7c1bb39bc8a46bdfd19fbe20c0c4d74be4e003ee5688",
+      "downloaded_locally": true
+    },
+    {
+      "name": "Description_of_Features.pdf",
+      "url": "https://www.cs.uoi.gr/~marina/SIPAKMED/Description_of_Features.pdf",
+      "head_status": 200,
+      "content_length_bytes": 478395,
+      "sha256": "4006bbee2ca0ed18cf12cd9ec3c1d7f2d203e716328e995f88e3365c97cf27b9",
+      "downloaded_locally": true
+    }
+  ],
+  "automatic_image_archive_download": {
+    "status": "incomplete_timeout",
+    "attempted_archive": "im_Superficial-Intermediate.7z",
+    "partial_bytes_before_removal": 567207696,
+    "expected_bytes": 762939737,
+    "partial_removed": true,
+    "manual_destination": "data/raw/sipakmed/"
+  },
+  "source_level_counts": {
+    "isolated_cell_images_official": 4049,
+    "cluster_cell_images_official": 966,
+    "categories_official": 5,
+    "feature_tables_extracted": 10
+  },
+  "local_full_inventory_performed": false,
+  "local_image_count": null,
+  "local_annotation_count": null,
+  "nucleus_gt_status": "official documentation states nucleus contour coordinates are provided; not locally verified from full image archives",
+  "cytoplasm_gt_status": "official documentation states cytoplasm contour coordinates are provided; not locally verified from full image archives",
+  "cytoplasm_contour_meaning": "not fully established; official PDF describes cytoplasm and nucleus regions, but whole-cell-vs-cytoplasm-only semantics require direct contour inspection",
+  "nc_computable": "conditional_not_locally_verified",
+  "image_annotation_mapping_valid": "not_locally_verified",
+  "parent_source_grouping_recoverable": "potentially_via_cluster_image_id_and_cell_id_not_locally_verified",
+  "existing_herlev_preprocessing_compatible": "statically_compatible_in_principle",
+  "verdict": "CONDITIONAL_GO",
+  "main_limitation": "full official image archives were not available locally because automatic official download timed out; contour format, alignment, native geometry, and parent grouping remain unverified",
+  "checkpoint_loaded": false,
+  "inference_run": false,
+  "prediction_metrics_seen": false,
+  "training_run": false,
+  "raw_files_committed": false
+}
