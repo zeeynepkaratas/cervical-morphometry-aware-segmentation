@@ -4,9 +4,11 @@ Date: 2026-08-13
 
 Protocol lock commit: `9c3d37df3a9bcf11353b5f40ed04bf98dc806d06`
 
+Completed preflight commit: recorded in Git history for this branch.
+
 ## Scope
 
-This report is an outcome-blind technical preflight for possible future SIPaKMeD external morphometry replication. No model checkpoint was loaded, no model prediction was generated, no inference was run, and no prediction-vs-ground-truth metric was calculated.
+This is a data-only, outcome-blind technical preflight for possible future SIPaKMeD external morphometry replication. No model checkpoint was loaded, no model inference was run, no model output was inspected, and no prediction-based metric was calculated.
 
 ## Official Source
 
@@ -22,177 +24,162 @@ Permitted use / license statement observed on the official page:
 
 The page states that the database is publicly available and may be used for experimental purposes with a request to cite the SIPaKMeD ICIP 2018 paper. No broader open-source license text was found on the official page during this preflight.
 
-## Official Download Routes
+## Archive Integrity
 
-All links below were found on the official page. Mirrors were not used.
+All five official image archives were present under `data/raw/sipakmed/`, matched the official HEAD byte counts recorded from the official source, were listable with `tar -tf`, and were extracted locally under `data/raw/sipakmed/`. Raw and extracted dataset files remain gitignored.
 
-| Archive | Official route | HEAD status | Reported size bytes |
-| --- | --- | ---: | ---: |
-| `im_Superficial-Intermediate.7z` | `https://www.cs.uoi.gr/~marina/SIPAKMED/im_Superficial-Intermediate.7z` | 200 | 762939737 |
-| `im_Parabasal.7z` | `https://www.cs.uoi.gr/~marina/SIPAKMED/im_Parabasal.7z` | 200 | 548667699 |
-| `im_Koilocytotic.7z` | `https://www.cs.uoi.gr/~marina/SIPAKMED/im_Koilocytotic.7z` | 200 | 1290478065 |
-| `im_Metaplastic.7z` | `https://www.cs.uoi.gr/~marina/SIPAKMED/im_Metaplastic.7z` | 200 | 1396480123 |
-| `im_Dyskeratotic.7z` | `https://www.cs.uoi.gr/~marina/SIPAKMED/im_Dyskeratotic.7z` | 200 | 1182980549 |
-| `Features_CELL.7z` | `https://www.cs.uoi.gr/~marina/SIPAKMED/Features_CELL.7z` | 200 | 608820 |
-| `Description_of_Features.pdf` | `https://www.cs.uoi.gr/~marina/SIPAKMED/Description_of_Features.pdf` | 200 | 478395 |
-
-The five image archives total approximately 5.18 GB before extraction.
-
-## Local Download Status
-
-Downloaded from the official source into ignored raw storage:
-
-- `data/raw/sipakmed/Description_of_Features.pdf`
-- `data/raw/sipakmed/Features_CELL.7z`
-
-Checksums:
-
-- `Description_of_Features.pdf`: SHA256 `4006bbee2ca0ed18cf12cd9ec3c1d7f2d203e716328e995f88e3365c97cf27b9`
-- `Features_CELL.7z`: SHA256 `23cebcab368e337e135d7c1bb39bc8a46bdfd19fbe20c0c4d74be4e003ee5688`
-
-Automatic download of `im_Superficial-Intermediate.7z` from the official host did not complete within a 40-minute command timeout. The incomplete local partial file was removed to avoid future confusion. The remaining official image archives were not downloaded in this run.
-
-Continued check on 2026-08-13:
-
-The five official image archives were checked again under `data/raw/sipakmed/`. None of the five required image archives were present locally, so archive integrity testing, extraction, complete file-level inventory, direct contour inspection, GT rasterization, eligibility-manifest generation, and GT alignment QC could not be performed without fabricating results.
-
-| Archive | Expected size bytes | Local status |
+| Archive | Bytes | SHA256 |
 | --- | ---: | --- |
-| `im_Superficial-Intermediate.7z` | 762939737 | missing |
-| `im_Parabasal.7z` | 548667699 | missing |
-| `im_Koilocytotic.7z` | 1290478065 | missing |
-| `im_Metaplastic.7z` | 1396480123 | missing |
-| `im_Dyskeratotic.7z` | 1182980549 | missing |
+| `im_Dyskeratotic.7z` | 1182980549 | `a8768bc03c9e814063ff946b7ef7548067e16b760168267d2b12e95a66955cce` |
+| `im_Koilocytotic.7z` | 1290478065 | `653578e878e3cc63a8510cd7ec26d918637d9881e913e29a5bb205d0d9cfb70d` |
+| `im_Metaplastic.7z` | 1396480123 | `97f1badc5f606f127d2af0d18a008ebd41a2b60f44785cb332a6eaa33004d2af` |
+| `im_Parabasal.7z` | 548667699 | `13e9c29f016a5b83731e038cfe518671a7815df28836dee706acba6ecd2369a8` |
+| `im_Superficial-Intermediate.7z` | 762939737 | `3b73e406df14d60b1bd9c8ac3b01b594e70bb51ba32fb080141fc6a7f489a599` |
 
-Expected manual download destination:
+## Complete Inventory
 
-`data/raw/sipakmed/`
+| Class | Parent cluster BMP | Cropped isolated BMP | Cropped nucleus contours | Cropped cytoplasm contours |
+| --- | ---: | ---: | ---: | ---: |
+| Dyskeratotic | 223 | 813 | 813 | 813 |
+| Koilocytotic | 238 | 825 | 825 | 825 |
+| Metaplastic | 271 | 793 | 793 | 793 |
+| Parabasal | 108 | 787 | 787 | 787 |
+| Superficial-Intermediate | 126 | 831 | 831 | 831 |
+| **Total** | **966** | **4049** | **4049** | **4049** |
 
-Manual download instructions:
+Total cropped annotation files: `8098`.
 
-1. Open `https://www.cs.uoi.gr/~marina/sipakmed.html`.
-2. Download the five official image archives listed above into `data/raw/sipakmed/`.
-3. Do not use Kaggle or other mirrors for this preflight.
-4. Keep the raw files uncommitted.
-5. After download, rerun the preflight inventory on the official archives only.
+Image format:
 
-## Official Dataset Description
+- Cropped images: BMP
+- Channels: RGB for all 4049 isolated-cell images
+- Dtype after load: uint8 for all 4049 isolated-cell images
+- Native width range: 62 to 531 pixels
+- Native height range: 48 to 553 pixels
+- Unique native dimensions: 3825
 
-The official page states that SIPaKMeD consists of 4049 isolated-cell images manually cropped from 966 cluster-cell images of Pap smear slides. The official page lists five categories: Superficial-Intermediate, Parabasal, Koilocytotic, Dyskeratotic, and Metaplastic.
+Duplicates and mappings:
 
-The official `Description_of_Features.pdf` states that boundaries of the cytoplasm and nucleus regions were manually defined by expert observers, and that contour coordinates are provided for both cluster images and isolated-cell images in the class image directories and their `CROPPED` subdirectories.
+- Duplicate sample ids: none
+- Duplicate cropped image content hashes: none
+- Duplicate cropped contour content hashes: none
+- Missing image-to-contour mappings: none
+- Corrupt/unreadable images: none detected
 
-## File-Level Inventory
+The deterministic sample id is:
 
-Full file-level image and contour inventory was not performed because the official image archives were not fully available locally.
+`<diagnostic_class>__<parent_cluster_id>_<cell_id>`
 
-No extraction was performed in the continued check because there were no complete official image archives to verify.
+The deterministic parent source id is:
 
-Source-level verified counts:
+`<diagnostic_class>__<parent_cluster_id>`
 
-- Isolated-cell images: 4049, from official page.
-- Parent cluster images: 966, from official page.
-- Category count: 5, from official page.
-- Feature tables: 10 `.dat` tables extracted from `Features_CELL.7z`, one cytoplasm table and one nuclei table per category.
+Parent grouping is recoverable for all samples: `966` unique parent-source ids, with 1 to 26 isolated cells per parent source.
 
-Local extracted feature files:
+## Contour Format And Coordinates
 
-- `DYSKERATOTIC_CYTOPLASM_FEAT.dat`
-- `DYSKERATOTIC_NUCLEI_FEAT.dat`
-- `KOILOCYTOTIC_CYTOPLASM_FEAT.dat`
-- `KOILOCYTOTIC_NUCLEI_FEAT.dat`
-- `METAPLASTIC_CYTOPLASM_FEAT.dat`
-- `METAPLASTIC_NUCLEI_FEAT.dat`
-- `PARABASAL_CYTOPLASM_FEAT.dat`
-- `PARABASAL_NUCLEI_FEAT.dat`
-- `SUP_INT_CYTOPLASM_FEAT.dat`
-- `SUP_INT_NUCLEI_FEAT.dat`
+Direct inspection of official cropped contour files established:
 
-These feature files contain derived intensity, texture, and shape features; they are not a substitute for contour files.
+- Nucleus contour format: plain text `.dat`, one comma-separated `x,y` floating-point coordinate pair per line.
+- Cytoplasm contour format: plain text `.dat`, one comma-separated `x,y` floating-point coordinate pair per line.
+- Coordinate convention: native image coordinate space, origin at the top-left.
+- x/y order: first coordinate is horizontal `x`/column, second coordinate is vertical `y`/row.
+- Indexing convention: continuous pixel coordinates bounded by `0 <= x < width` and `0 <= y < height`; these are not integer class-label indices.
+- Polygon closure: contours do not need to repeat the first point; rasterization closes the polygon deterministically.
 
-## Annotation Semantics
+Evidence for x/y order:
 
-Nucleus GT status:
+- `8070 / 8098` contours were in bounds under native `x,y` interpretation.
+- Only `4382 / 8098` would be in bounds if coordinates were swapped.
+- Cropped contour examples align with cropped image dimensions under `x,y` interpretation.
 
-Official documentation states that nucleus contour coordinates are provided.
+## Cytoplasm Semantics
 
-Cytoplasm GT status:
+Verified cytoplasm semantics:
 
-Official documentation states that cytoplasm contour coordinates are provided.
+`whole-cell outer boundary including nucleus`
 
-Meaning of cytoplasm contour:
+The cytoplasm contour files provide a single outer cell/cytoplasm boundary polygon. When rasterized, this polygon contains the nucleus for technically valid samples. Therefore the canonical SIPaKMeD target is constructed as:
 
-Not fully established from local contour files. The official PDF describes "the area of the cytoplasm and the nucleus" and separately names cytoplasm and nucleus feature tables. This supports the presence of a cytoplasm region annotation, but the whole-cell-including-nucleus vs cytoplasm-only distinction must still be verified directly from the contour coordinate files after the official image archives are available.
+- nucleus mask = rasterized nucleus contour
+- whole-cell mask = rasterized cytoplasm contour
+- cytoplasm-only mask = `whole_cell_mask AND NOT nucleus_mask`
 
-Direct contour inspection status:
+This matches the existing project target convention:
 
-Not performed. The required official image archives containing the contour coordinate files were absent locally.
+- `0 = background/other`
+- `1 = cytoplasm-only`
+- `2 = nucleus`
 
-N/C computable:
+## Technical Eligibility
 
-Conditionally yes, if the contour files align with the official description and the cytoplasm contour semantics can be resolved deterministically. It is not yet locally verified.
+Technically eligible isolated-cell samples: `4000`
 
-Image-annotation mapping:
+Technically excluded isolated-cell samples: `49`
 
-Not yet locally verified. The feature tables use image number and cell number fields, and the official PDF says contour coordinates are provided in the class image directories and `CROPPED` subdirectories. Full deterministic mapping requires the image archives.
+Exclusion reasons are data/annotation-only:
 
-Parent-source grouping:
+| Reason | Count |
+| --- | ---: |
+| `nucleus_contour_out_of_bounds` | 26 |
+| `empty_nucleus_mask` | 25 |
+| `undefined_nucleus_circularity` | 25 |
+| `nucleus_pixels_outside_cell_mask` | 22 |
+| `cytoplasm_contour_out_of_bounds` | 2 |
 
-Potentially recoverable through cluster image id and cell id, but not yet locally verified from the archive structure. Future inference should use parent-source-aware resampling if parent source ids are confirmed.
+Counts may overlap because one sample can have more than one technical exclusion reason.
+
+For all technically eligible samples:
+
+- nucleus area is defined
+- nucleus perimeter is defined
+- nucleus circularity is defined
+- cytoplasm-only area is nonzero
+- N/C ratio is mathematically computable
+- nucleus and cytoplasm-only masks are pixel-exclusive by construction
+- nucleus is geometrically compatible with the cell mask
+
+N/C is not computable for all raw samples because 49 samples fail technical annotation validity checks. These failures are explicitly listed in `results/sipakmed_preflight/sipakmed_eligibility_manifest.csv`.
+
+## Outputs
+
+Generated outcome-blind data-only outputs:
+
+- `src/data_prep/load_sipakmed.py`
+- `experiments/run_sipakmed_preflight.py`
+- `tests/test_sipakmed_loader.py`
+- `results/sipakmed_preflight/sipakmed_eligibility_manifest.csv`
+- `results/sipakmed_preflight/gt_alignment_qc.png`
+- `results/sipakmed_preflight/preflight_summary.json`
+
+The QC figure contains RGB images with GT nucleus and GT whole-cell/cytoplasm overlays only. It contains no model predictions.
 
 ## Existing Herlev Preprocessing Compatibility
 
-The existing preprocessing in `src/segmentation/train_unet.py` is statically compatible in principle with RGB isolated-cell images:
+The existing Herlev preprocessing is technically compatible with the eligible SIPaKMeD isolated-cell images:
 
-- RGB input is preserved.
-- Pixel values are normalized from uint8 `[0, 255]` to float `[0, 1]`.
-- Aspect ratio is preserved by isotropic resize.
-- Center padding is applied to `128 x 128`.
-- Masks are resized with nearest-neighbor interpolation when target masks are built.
+- RGB input can be preserved.
+- Pixel values are uint8 and can be normalized from `[0, 255]` to `[0, 1]`.
+- Aspect-ratio-preserving resize and center padding to `128 x 128` can be applied.
+- Native-geometry GT masks are available for future restoration/evaluation.
 
-No SIPaKMeD image was passed through model preprocessing in this preflight.
-
-## Technical Eligibility Rules For Future Full Preflight
-
-Future inclusion/exclusion must be based only on technical data validity. Proposed exclusion reasons:
-
-- unreadable image
-- missing corresponding nucleus contour
-- missing corresponding cytoplasm or whole-cell contour
-- contour parse failure
-- self-intersecting or irrecoverably invalid polygon
-- contour coordinates outside the image with no documented correction
-- empty nucleus mask after rasterization
-- empty cytoplasm-only mask after rasterization
-- unresolvable image/cell id mismatch
-- unresolvable coordinate indexing or x/y orientation ambiguity
-
-Forbidden exclusion reasons:
-
-- low predicted Dice
-- high morphometric error
-- diagnosis or category performing poorly
-- difficult-looking morphology
-- future model failure
-- post-processing failure
+No SIPaKMeD image was passed through a model in this preflight.
 
 ## Verdict
 
-`CONDITIONAL_GO`
+`GO`
 
 Rationale:
 
-The official source is confirmed and official documentation states that both nucleus and cytoplasm contour coordinates are provided for the cluster and isolated-cell image directories. This makes SIPaKMeD technically plausible for a future nucleus-plus-cytoplasm morphometry preflight. However, the full official image archives were not available locally after the automatic download attempt timed out, so contour file format, contour semantics, image-annotation alignment, parent-source grouping, malformed-file rates, native geometry distributions, and deterministic loader behavior remain unverified.
+The full official data are available and extracted; image/annotation mapping is deterministic; nucleus and cytoplasm contours are present and directly parsed; coordinate convention is resolved; cytoplasm semantics are resolved as whole-cell outer boundary; canonical 3-class GT construction is reproducible; N/C is computable for the locked technically eligible subset; parent-source grouping is recoverable. The 49 exclusions are deterministic technical annotation-validity exclusions and are recorded before any model exposure.
 
-The next step must be a full official-archive download followed by a data-only archive/file/contour inventory. No model inference should be run before that inventory passes.
-
-After the continued check, the verdict remains `CONDITIONAL_GO` rather than `GO` because the full official data are still unavailable locally. It is not changed to `NO_GO` because the official source and documentation still support technical plausibility; the unresolved issue is local archive availability and direct contour verification, not a demonstrated annotation failure.
+The dataset is ready for future external protocol freezing. Do not run inference until that protocol is explicitly frozen.
 
 ## Outcome-Blind Compliance
 
 - Was any model checkpoint loaded? NO
 - Was any inference run? NO
-- Were any prediction metrics seen? NO
+- Were any prediction metrics inspected? NO
 - Was training or fine-tuning run? NO
 - Were existing Herlev/closing/matched-null scientific results changed? NO
 - Were raw SIPaKMeD files committed? NO
