@@ -40,6 +40,9 @@ results/**/checkpoints/
 results/**/predictions/
 results/**/masks/
 results/**/cache/
+results/**/_partial/
+results/**/*_partial.jsonl
+results/**/*resume*.jsonl
 results/**/figures/*.png
 results/**/figures/*.jpg
 results/**/figures/*.pdf

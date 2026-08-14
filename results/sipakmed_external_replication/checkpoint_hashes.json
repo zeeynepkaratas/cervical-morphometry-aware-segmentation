@@ -1,0 +1,14 @@
+{
+  "20260803": {
+    "path": "results\\pilot\\fair_repeat\\checkpoints\\baseline_seed_20260803_best_val_dice.pt",
+    "sha256": "8c52642452c674bc4b929a7b643c9f69f0fc600d2f7b5eafdf733287e98eed51"
+  },
+  "20260804": {
+    "path": "results\\pilot\\fair_repeat\\checkpoints\\baseline_seed_20260804_best_val_dice.pt",
+    "sha256": "d8bf421f71b0ba899a9d70700f6bdb1155110fd91af8617daff97325aed2b6af"
+  },
+  "20260805": {
+    "path": "results\\pilot\\fair_repeat\\checkpoints\\baseline_seed_20260805_best_val_dice.pt",
+    "sha256": "a8e1563e5dc86f67ed5b393a8f1fc78a96165b727cedd766aa8c1131bc5fdc26"
+  }
+}

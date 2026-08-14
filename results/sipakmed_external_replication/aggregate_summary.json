@@ -1,0 +1,317 @@
+{
+  "status": "SIPAKMED_EXTERNAL_REPLICATION_COMPLETE",
+  "protocol_lock_commit": "b0cb7f6d727503861a36b0d754f18c5d999cffe8",
+  "n_locked_eligible": 4000,
+  "n_evaluated": 4000,
+  "all_4000_locked_eligible_samples_evaluated": true,
+  "seed_family_aggregation": "cell-level median across all three frozen baseline seeds",
+  "primary_external_replication": {
+    "mean_nucleus_dice": {
+      "estimate": 0.6643442492056391,
+      "ci_low": 0.649494538735525,
+      "ci_high": 0.6790357222004736,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    },
+    "mean_circularity_ae": {
+      "estimate": 0.18507341530783095,
+      "ci_low": 0.17788325214852924,
+      "ci_high": 0.19263262760076985,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    },
+    "spearman_nucleus_dice_vs_circularity_ae": {
+      "estimate": -0.5056817879665255,
+      "ci_low": -0.538003578780258,
+      "ci_high": -0.47197322287728466,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 3939,
+      "finite_bootstrap_replicates": 10000
+    }
+  },
+  "secondary_morphometric_analyses": {
+    "mean_area_ae": {
+      "estimate": 1717.59975,
+      "ci_low": 1555.1670898248183,
+      "ci_high": 1893.223723240032,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    },
+    "mean_perimeter_ae": {
+      "estimate": 79.58207036111827,
+      "ci_low": 73.37030691785685,
+      "ci_high": 86.29551427160683,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    },
+    "mean_nc_ae": {
+      "estimate": 0.15327543813956843,
+      "ci_low": 0.13835876762315896,
+      "ci_high": 0.1702065858268826,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    },
+    "mean_foreground_dice": {
+      "estimate": 0.6805391976131392,
+      "ci_low": 0.6683056390151266,
+      "ci_high": 0.6924551598873989,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    },
+    "spearman_foreground_dice_vs_area_ae": {
+      "estimate": -0.5919684668578965,
+      "ci_low": -0.6227114084072709,
+      "ci_high": -0.5603515679860154,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    },
+    "spearman_foreground_dice_vs_perimeter_ae": {
+      "estimate": -0.5777107892431084,
+      "ci_low": -0.6067388058041758,
+      "ci_high": -0.5478259286845081,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 3939,
+      "finite_bootstrap_replicates": 10000
+    },
+    "spearman_foreground_dice_vs_nc_ae": {
+      "estimate": -0.5463363392379956,
+      "ci_low": -0.5850109037213796,
+      "ci_high": -0.5056504775307502,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 3999,
+      "finite_bootstrap_replicates": 10000
+    },
+    "spearman_nucleus_dice_vs_area_ae": {
+      "estimate": -0.7300270917211535,
+      "ci_low": -0.7494450000345659,
+      "ci_high": -0.7090865621415687,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    },
+    "spearman_nucleus_dice_vs_perimeter_ae": {
+      "estimate": -0.6634354999547365,
+      "ci_low": -0.6874427280266593,
+      "ci_high": -0.6387584851085624,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 3939,
+      "finite_bootstrap_replicates": 10000
+    }
+  },
+  "external_closing_vs_matched_null_specificity": {
+    "mean_raw_circularity_ae": {
+      "estimate": 0.18507341530783095,
+      "ci_low": 0.17788325214852924,
+      "ci_high": 0.19263262760076985,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    },
+    "mean_closing_circularity_ae": {
+      "estimate": 0.1298634234055807,
+      "ci_low": 0.12375496242956578,
+      "ci_high": 0.1363708713267412,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    },
+    "mean_null_circularity_ae": {
+      "estimate": 0.13257592626842263,
+      "ci_low": 0.1262879236085959,
+      "ci_high": 0.13920765076323552,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    },
+    "mean_closing_benefit": {
+      "estimate": 0.054937693439892625,
+      "ci_low": 0.051784979766232,
+      "ci_high": 0.05802876925799322,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    },
+    "mean_null_benefit": {
+      "estimate": 0.05229589087263856,
+      "ci_low": 0.04925984982952326,
+      "ci_high": 0.05528606780188276,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    },
+    "mean_closing_specific_residual": {
+      "estimate": 0.0023061751299224323,
+      "ci_low": 0.002045958470893045,
+      "ci_high": 0.0025847160526682256,
+      "bootstrap_repeats": 10000,
+      "bootstrap_seed": 20260813,
+      "cluster_unit": "parent_source_id",
+      "n_clusters": 963,
+      "n_cells": 4000,
+      "finite_bootstrap_replicates": 10000
+    }
+  },
+  "invalid_rates": {
+    "raw_invalid_prediction_rate": 0.039,
+    "raw_invalid_circularity_rate": 0.039,
+    "raw_invalid_nc_rate": 0.00025
+  },
+  "seed_summary": [
+    {
+      "model": "baseline",
+      "seed": 20260803,
+      "n_evaluated": 4000,
+      "nucleus_dice_mean": 0.55254029331289,
+      "foreground_dice_mean": 0.5901309726198533,
+      "circularity_ae_mean": 0.24365746346701225,
+      "area_ae_mean": 2645.45275,
+      "perimeter_ae_mean": 122.64113136483563,
+      "nc_ae_mean": 0.5428850574564827,
+      "invalid_prediction_rate": 0.1,
+      "invalid_circularity_rate": 0.1,
+      "invalid_nc_rate": 0.0045
+    },
+    {
+      "model": "baseline",
+      "seed": 20260804,
+      "n_evaluated": 4000,
+      "nucleus_dice_mean": 0.6727233231845047,
+      "foreground_dice_mean": 0.6909280062197491,
+      "circularity_ae_mean": 0.18040041218223893,
+      "area_ae_mean": 1479.4215,
+      "perimeter_ae_mean": 68.88185730892033,
+      "nc_ae_mean": 0.14896577106400233,
+      "invalid_prediction_rate": 0.046,
+      "invalid_circularity_rate": 0.046,
+      "invalid_nc_rate": 0.0005
+    },
+    {
+      "model": "baseline",
+      "seed": 20260805,
+      "n_evaluated": 4000,
+      "nucleus_dice_mean": 0.6948354380062356,
+      "foreground_dice_mean": 0.7040915392462939,
+      "circularity_ae_mean": 0.1779675685476673,
+      "area_ae_mean": 1681.88725,
+      "perimeter_ae_mean": 79.12897883383155,
+      "nc_ae_mean": 0.1473872173395425,
+      "invalid_prediction_rate": 0.026,
+      "invalid_circularity_rate": 0.026,
+      "invalid_nc_rate": 0.00025
+    }
+  ],
+  "runtime_failures": [],
+  "provenance": {
+    "started_at_utc": "2026-08-14T00:04:56.592244+00:00",
+    "finished_at_utc": "2026-08-14T00:05:32.907733+00:00",
+    "elapsed_seconds": 36.06749606132507,
+    "device": "cpu",
+    "python": "3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "torch_version": "2.13.0+cpu",
+    "cuda_available": false,
+    "opencv_version": "5.0.0",
+    "numpy_version": "2.5.1",
+    "matplotlib_version": "3.11.1",
+    "git": {
+      "head": "b0cb7f6d727503861a36b0d754f18c5d999cffe8",
+      "branch": "codex/sipakmed-external-replication",
+      "lock_commit": "b0cb7f6d727503861a36b0d754f18c5d999cffe8",
+      "lock_tag": "sipakmed-external-lock-20260813",
+      "lock_tag_target": "b0cb7f6d727503861a36b0d754f18c5d999cffe8",
+      "manifest_sha256": "e86e99441866fb03d457e3867032ecee4e6792285c6647d93e35089b923de1cd"
+    },
+    "checkpoints": {
+      "20260803": {
+        "path": "results\\pilot\\fair_repeat\\checkpoints\\baseline_seed_20260803_best_val_dice.pt",
+        "sha256": "8c52642452c674bc4b929a7b643c9f69f0fc600d2f7b5eafdf733287e98eed51"
+      },
+      "20260804": {
+        "path": "results\\pilot\\fair_repeat\\checkpoints\\baseline_seed_20260804_best_val_dice.pt",
+        "sha256": "d8bf421f71b0ba899a9d70700f6bdb1155110fd91af8617daff97325aed2b6af"
+      },
+      "20260805": {
+        "path": "results\\pilot\\fair_repeat\\checkpoints\\baseline_seed_20260805_best_val_dice.pt",
+        "sha256": "a8e1563e5dc86f67ed5b393a8f1fc78a96165b727cedd766aa8c1131bc5fdc26"
+      }
+    },
+    "code_hashes": {
+      "docs/SIPAKMED_EXTERNAL_REPLICATION_FINAL_LOCK.md": "e9824a64a3ed586e3bcb9e5e85f3a644a2bd1d73e1c8fad090bd7d3f6907eb45",
+      "experiments/run_sipakmed_external_replication.py": "403c0a871670d6f09e80276c9fb9dab4133b6534461387c095024cd13be45335",
+      "src/data_prep/load_sipakmed.py": "a20d049aff5f95ce93fe737b5e3649c48a7c5f33d4b7e44bd81941386f5f857a",
+      "src/segmentation/unet_model.py": "39a75c0bbd25881014b2056598de24f13fbb0d8787de1477c9f610a236223d1b",
+      "src/segmentation/train_unet.py": "87479187ec0bd799a124d49473db1d22752de83e1cad67ebea1b057810271600",
+      "src/measurements/morphometry.py": "ef551a2e234f8505c38feab210de6e05305df440c1d90aae3041f80dca59d000",
+      "src/pilot/metrics.py": "df38b32e09fbd0147f1d34ff7a0f4367d852278820917f5d8f515ee1f69b9f55",
+      "src/closing_dual_matched_null.py": "5232de63f0bd896d943307a47147e0a3b40cc25daab91e36d230a662c140e112"
+    },
+    "output_figures": [
+      "results\\sipakmed_external_replication\\figures\\primary_dice_vs_circularity_ae.png",
+      "results\\sipakmed_external_replication\\figures\\closing_specificity_circularity_ae.png",
+      "results\\sipakmed_external_replication\\figures\\secondary_morphometry_mean_ae.png"
+    ],
+    "protocol_unchanged": true,
+    "training_run": false,
+    "fine_tuning_run": false,
+    "checkpoint_selection_from_sipakmed": false,
+    "postprocessing_parameter_sweep": false
+  }
+}
