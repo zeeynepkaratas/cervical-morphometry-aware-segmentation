@@ -1,0 +1,10 @@
+{
+  "docs/SIPAKMED_EXTERNAL_REPLICATION_FINAL_LOCK.md": "e9824a64a3ed586e3bcb9e5e85f3a644a2bd1d73e1c8fad090bd7d3f6907eb45",
+  "experiments/run_sipakmed_external_replication.py": "403c0a871670d6f09e80276c9fb9dab4133b6534461387c095024cd13be45335",
+  "src/data_prep/load_sipakmed.py": "a20d049aff5f95ce93fe737b5e3649c48a7c5f33d4b7e44bd81941386f5f857a",
+  "src/segmentation/unet_model.py": "39a75c0bbd25881014b2056598de24f13fbb0d8787de1477c9f610a236223d1b",
+  "src/segmentation/train_unet.py": "87479187ec0bd799a124d49473db1d22752de83e1cad67ebea1b057810271600",
+  "src/measurements/morphometry.py": "ef551a2e234f8505c38feab210de6e05305df440c1d90aae3041f80dca59d000",
+  "src/pilot/metrics.py": "df38b32e09fbd0147f1d34ff7a0f4367d852278820917f5d8f515ee1f69b9f55",
+  "src/closing_dual_matched_null.py": "5232de63f0bd896d943307a47147e0a3b40cc25daab91e36d230a662c140e112"
+}
